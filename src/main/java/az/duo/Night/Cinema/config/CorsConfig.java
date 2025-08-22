@@ -14,7 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         // inkişaf mərhələsində
-                        .allowedOrigins("http://localhost:3000")
+                        .allowedOrigins("http://127.0.0.1:3000")
                         // prod üçün frontend host yazacaqsan, məsələn:
                         // .allowedOrigins("https://my-frontend.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
