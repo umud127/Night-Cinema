@@ -1,4 +1,4 @@
-package az.duo.Night.Cinema.controller.IMPL;
+package az.duo.Night.Cinema.controller.impl;
 
 import az.duo.Night.Cinema.controller.IRestAuthController;
 import az.duo.Night.Cinema.entity.BaseEntity;

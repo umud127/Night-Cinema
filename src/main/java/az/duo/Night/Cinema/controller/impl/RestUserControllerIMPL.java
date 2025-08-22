@@ -1,7 +1,7 @@
-package az.duo.Night.Cinema.controller.IMPL;
+package az.duo.Night.Cinema.controller.impl;
 
 import az.duo.Night.Cinema.entity.User;
-import az.duo.Night.Cinema.service.RestUserServiceIMPL;
+import az.duo.Night.Cinema.service.impl.RestUserServiceIMPL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

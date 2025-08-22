@@ -1,17 +1,18 @@
-package az.duo.Night.Cinema.service;
+package az.duo.Night.Cinema.service.impl;
 
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.jwt.*;
 import az.duo.Night.Cinema.repository.RestUserRepo;
+import az.duo.Night.Cinema.service.IRestAuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class RestAuthServiceIMPL implements IRestAuthService{
+public class RestAuthServiceIMPL implements IRestAuthService {
 
     private final JWTService jwtService;
     private final RestUserRepo restUserRepo;

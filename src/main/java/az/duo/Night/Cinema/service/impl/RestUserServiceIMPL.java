@@ -1,4 +1,4 @@
-package az.duo.Night.Cinema.service;
+package az.duo.Night.Cinema.service.impl;
 
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.jwt.JWTService;
