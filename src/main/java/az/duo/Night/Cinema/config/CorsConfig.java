@@ -13,8 +13,13 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("*") // ya da dostunun frontend URL-i
-                        .allowedMethods("GET", "POST", "PUT", "DELETE");
+                        // inkişaf mərhələsində
+                        .allowedOrigins("http://localhost:3000")
+                        // prod üçün frontend host yazacaqsan, məsələn:
+                        // .allowedOrigins("https://my-frontend.com")
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                        .allowedHeaders("*")
+                        .allowCredentials(true);
             }
         };
     }
