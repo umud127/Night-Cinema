@@ -28,13 +28,13 @@ public class RestAuthControllerIMPL implements IRestAuthController {
 
     @PostMapping("/login")
     @Override
-    public BaseEntity<AuthResponse> authentication(AuthRequest request) {
+    public BaseEntity<AuthResponse> authentication(@RequestBody AuthRequest request) {
         return restAuthService.authentication(request);
     }
 
     @PostMapping("/refresh")
     @Override
-    public BaseEntity<AuthResponse> refreshToken(RefreshTokenRequest request) {
+    public BaseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         return restAuthService.refreshToken(request);
     }
 }

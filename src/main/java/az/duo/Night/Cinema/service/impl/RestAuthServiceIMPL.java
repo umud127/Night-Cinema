@@ -47,7 +47,21 @@ public class RestAuthServiceIMPL implements IRestAuthService {
 
     @Override
     public BaseEntity<AuthResponse> authentication(AuthRequest request) {
-        return null;
+        if(request.getEmail() == null || request.getPassword() == null) {
+            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "email and password are required", "/login");
+        }
+
+        User user = restUserRepo.findByEmail(request.getEmail()).orElse(null);
+        if(user != null && bCryptPasswordEncoder.matches(request.getPassword(), user.getPassword())) {
+            AuthResponse response = new AuthResponse();
+
+            response.setAccessToken(jwtService.generateToken(user));
+            response.setRefreshToken(jwtService.generateRefreshToken(user));
+
+            return BaseEntity.ok(response);
+        }
+
+        return BaseEntity.notOk(StatusCode.NOT_FOUND, "email not found", "/login");
     }
 
     @Override
