@@ -32,7 +32,7 @@ public class RestAuthControllerIMPL implements IRestAuthController {
         return restAuthService.authentication(request);
     }
 
-    @PostMapping("/refresh")
+    @PostMapping("/refresh_token")
     @Override
     public BaseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
         return restAuthService.refreshToken(request);

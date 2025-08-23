@@ -52,6 +52,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
         }
 
         User user = restUserRepo.findByEmail(request.getEmail()).orElse(null);
+
         if(user != null && bCryptPasswordEncoder.matches(request.getPassword(), user.getPassword())) {
             AuthResponse response = new AuthResponse();
 
@@ -61,11 +62,41 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             return BaseEntity.ok(response);
         }
 
-        return BaseEntity.notOk(StatusCode.NOT_FOUND, "email not found", "/login");
+        if(user == null) {
+            return BaseEntity.notOk(StatusCode.NOT_FOUND, "email not found", "/login");
+        } else {
+            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "password is incorrect", "/login");
+        }
     }
 
     @Override
     public BaseEntity<AuthResponse> refreshToken(RefreshTokenRequest request) {
-        return null;
+
+        String refreshToken = request.getRefreshToken();
+        if(refreshToken == null || refreshToken.isBlank()) {
+            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "refreshToken is required", "/refresh");
+        }
+
+        boolean tokenIsExpired = jwtService.isTokenExpired(refreshToken);
+
+        String username;
+        if (!tokenIsExpired) {
+            username = jwtService.extractUsername(refreshToken);
+        } else {
+            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "refreshToken is expired", "/refresh");
+        }
+
+        User user = restUserRepo.findByEmail(username).orElse(null);
+
+        if(user != null) {
+            AuthResponse response = new AuthResponse();
+
+            response.setAccessToken(jwtService.generateToken(user));
+            response.setRefreshToken(jwtService.generateRefreshToken(user));
+
+            return BaseEntity.ok(response);
+        }
+
+        return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/refresh");
     }
 }

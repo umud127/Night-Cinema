@@ -52,11 +52,6 @@ public class JWTService {
         return buildToken(new HashMap<>(), userDetails, REFRESH_TOKEN_EXPIRATION);
     }
 
-    public boolean validateToken(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && isTokenExpired(token));
-    }
-
     public boolean isTokenExpired(String token) {
         Date expirationDate = extractClaim(token, Claims::getExpiration);
         return expirationDate.before(new Date());
