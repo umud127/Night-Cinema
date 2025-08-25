@@ -20,19 +20,19 @@ public class RestUserControllerIMPL implements IRestUserController {
     @GetMapping(path = "/info")
     @Override
     public BaseEntity<DTOUserInfo> getUserInfo(@RequestHeader("Authorization") String token) {
-        return restUserService.getUserInfo(token);
+        return restUserService.getUserInfo(token.substring(7));
     }
 
     @GetMapping(path = "/security")
     @Override
     public BaseEntity<DTOUserSecurity> getUserSecurity(@RequestHeader("Authorization") String token) {
-        return restUserService.getUserSecurity(token);
+        return restUserService.getUserSecurity(token.substring(7));
     }
 
     @GetMapping(path = "/movie")
     @Override
     public BaseEntity<DTOUserMovie> getUserMovie(@RequestHeader("Authorization") String token) {
-        return restUserService.getUserMovie(token);
+        return restUserService.getUserMovie(token.substring(7));
     }
 
     @PutMapping(path = "/update")
