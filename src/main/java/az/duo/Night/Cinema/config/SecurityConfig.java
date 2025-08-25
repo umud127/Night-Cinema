@@ -29,10 +29,10 @@ public class SecurityConfig {
     private final AuthenticationProvider authProvider;
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
 
-    @Bean
-    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
-        return new GrantedAuthorityDefaults(""); // "ROLE_" prefixini silir (user admin yazıram Role_admin ve ya Role_user yazmiram)
-    }
+//    @Bean
+//    public GrantedAuthorityDefaults grantedAuthorityDefaults() {
+//        return new GrantedAuthorityDefaults(""); // "ROLE_" prefixini silir (user admin yazıram Role_admin ve ya Role_user yazmiram)
+//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
