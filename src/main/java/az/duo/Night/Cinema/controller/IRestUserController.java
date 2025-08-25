@@ -1,12 +1,18 @@
 package az.duo.Night.Cinema.controller;
 
-import az.duo.Night.Cinema.dto.DTOUser;
 import az.duo.Night.Cinema.dto.DTOUserIU;
+import az.duo.Night.Cinema.dto.DTOUserInfo;
+import az.duo.Night.Cinema.dto.DTOUserMovie;
+import az.duo.Night.Cinema.dto.DTOUserSecurity;
 import az.duo.Night.Cinema.entity.BaseEntity;
 
 public interface IRestUserController {
 
-    BaseEntity<DTOUser> getUser(String token);
+    BaseEntity<DTOUserInfo> getUserInfo(String token);
 
-    BaseEntity<DTOUser> updateUser(String token, DTOUserIU user);
+    BaseEntity<DTOUserSecurity> getUserSecurity(String token);
+
+    BaseEntity<DTOUserMovie> getUserMovie(String token);
+
+    BaseEntity<DTOUserSecurity> updateUser(String token, DTOUserIU user);
 }
