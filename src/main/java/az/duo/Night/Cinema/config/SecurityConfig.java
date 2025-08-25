@@ -43,7 +43,7 @@ public class SecurityConfig {
                         authorizeRequests ->
                                 authorizeRequests
                                         .requestMatchers(AUTH).permitAll()
-                                        .requestMatchers(USER).hasRole("USER")
+                                        .requestMatchers(USER).permitAll()   //.hasRole("USER")
                                         .requestMatchers(ADMIN).hasRole("ADMIN")
                                         .anyRequest()
                                         .authenticated()
