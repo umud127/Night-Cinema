@@ -33,9 +33,6 @@ public class Movie {
     @Column(name = "view_count")
     private Long viewCount;
 
-    @ManyToMany(mappedBy = "movies", fetch = FetchType.LAZY)
-    private Set<User> users = new HashSet<>();
-
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieSession> movieSessions = new ArrayList<>();
 }

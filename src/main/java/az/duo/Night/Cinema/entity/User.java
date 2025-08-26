@@ -46,11 +46,11 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-            name = "user_movie",
+            name = "user_movie_session",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "movie_id")
+            inverseJoinColumns = @JoinColumn(name = "movie_session_id")
     )
-    private List<Movie> movies;
+    private List<MovieSession> movies;
 
     @Column(name = "created_at")
     @CreationTimestamp

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "movie_session")
@@ -32,6 +33,9 @@ public class MovieSession {
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
+
+    @ManyToMany
+    private List<User> users;
 
     @Column(name = "start_time")
     private LocalDateTime startTime;

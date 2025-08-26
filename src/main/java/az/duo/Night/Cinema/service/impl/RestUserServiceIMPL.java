@@ -1,10 +1,12 @@
 package az.duo.Night.Cinema.service.impl;
 
-import az.duo.Night.Cinema.dto.DTOUserIU;
-import az.duo.Night.Cinema.dto.DTOUserInfo;
-import az.duo.Night.Cinema.dto.DTOUserMovie;
-import az.duo.Night.Cinema.dto.DTOUserSecurity;
+import az.duo.Night.Cinema.dto.movie.DTOMovie;
+import az.duo.Night.Cinema.dto.user.DTOUserIU;
+import az.duo.Night.Cinema.dto.user.DTOUserInfo;
+import az.duo.Night.Cinema.dto.user.DTOUserMovie;
+import az.duo.Night.Cinema.dto.user.DTOUserSecurity;
 import az.duo.Night.Cinema.entity.BaseEntity;
+import az.duo.Night.Cinema.entity.MovieSession;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.jwt.JWTService;
@@ -14,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -80,12 +83,23 @@ public class RestUserServiceIMPL implements IRestUserService {
             return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/me");
         }
 
-        Optional<User> dbUser = restUserRepo.findById(id);
+        Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
 
         if(dbUser.isPresent()) {
             DTOUserMovie user = new DTOUserMovie();
-            BeanUtils.copyProperties(dbUser.get(), user);
-            //eger menimsedilmeyen varsa manual menimsedecem
+
+            List<MovieSession> movies = dbUser.get();
+            List<DTOMovie> dtoMovies = new java.util.ArrayList<>();
+
+            for(MovieSession movie : movies) {
+                DTOMovie dtoMovie = new DTOMovie();
+                BeanUtils.copyProperties(movie.getMovie(), dtoMovie);
+                dtoMovies.add(dtoMovie);
+            }
+
+            user.setGotMovies(dtoMovies.size());
+            user.setMovies(dtoMovies);
+
             return BaseEntity.ok(user);
         }
 

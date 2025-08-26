@@ -1,4 +1,4 @@
-package az.duo.Night.Cinema.dto;
+package az.duo.Night.Cinema.dto.user;
 
 import lombok.Data;
 

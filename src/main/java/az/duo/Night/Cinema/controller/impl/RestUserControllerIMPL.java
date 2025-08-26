@@ -1,10 +1,10 @@
 package az.duo.Night.Cinema.controller.impl;
 
 import az.duo.Night.Cinema.controller.IRestUserController;
-import az.duo.Night.Cinema.dto.DTOUserIU;
-import az.duo.Night.Cinema.dto.DTOUserInfo;
-import az.duo.Night.Cinema.dto.DTOUserMovie;
-import az.duo.Night.Cinema.dto.DTOUserSecurity;
+import az.duo.Night.Cinema.dto.user.DTOUserIU;
+import az.duo.Night.Cinema.dto.user.DTOUserInfo;
+import az.duo.Night.Cinema.dto.user.DTOUserMovie;
+import az.duo.Night.Cinema.dto.user.DTOUserSecurity;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.service.IRestUserService;
 import lombok.RequiredArgsConstructor;
