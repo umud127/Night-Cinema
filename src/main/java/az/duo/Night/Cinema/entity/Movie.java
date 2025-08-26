@@ -27,6 +27,9 @@ public class Movie {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "image_url")
+    private String imageUrl;
+
     @Column(name = "view_count")
     private Long viewCount;
 
