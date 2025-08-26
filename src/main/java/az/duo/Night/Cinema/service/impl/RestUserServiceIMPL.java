@@ -92,13 +92,14 @@ public class RestUserServiceIMPL implements IRestUserService {
             List<MovieSession> movies = dbUser.get();
             List<DTOMovie> dtoMovies = new java.util.ArrayList<>();
 
-            for(MovieSession movie : movies) {
+            for(MovieSession movieSession : movies) {
                 DTOMovie dtoMovie = new DTOMovie();
 
-                dtoMovie.setName(movie.getMovie().getName());
-                dtoMovie.setDescription(movie.getMovie().getDescription());
-                dtoMovie.setCoverPhotoUrl(movie.getMovie().getCoverPhotoUrl());
-                dtoMovie.setDate(movie.getStartTime());
+                dtoMovie.setName(movieSession.getMovie().getName());
+                dtoMovie.setDescription(movieSession.getMovie().getDescription());
+                dtoMovie.setDate(movieSession.getStartTime());
+
+                dtoMovie.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
 
                 dtoMovies.add(dtoMovie);
             }
