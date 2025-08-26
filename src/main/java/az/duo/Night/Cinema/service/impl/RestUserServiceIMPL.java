@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,7 +94,12 @@ public class RestUserServiceIMPL implements IRestUserService {
 
             for(MovieSession movie : movies) {
                 DTOMovie dtoMovie = new DTOMovie();
-                BeanUtils.copyProperties(movie.getMovie(), dtoMovie);
+
+                dtoMovie.setName(movie.getMovie().getName());
+                dtoMovie.setDescription(movie.getMovie().getDescription());
+                dtoMovie.setCoverPhotoUrl(movie.getMovie().getCoverPhotoUrl());
+                dtoMovie.setDate(movie.getStartTime());
+
                 dtoMovies.add(dtoMovie);
             }
 

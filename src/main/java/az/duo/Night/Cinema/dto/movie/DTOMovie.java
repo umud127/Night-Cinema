@@ -2,6 +2,7 @@ package az.duo.Night.Cinema.dto.movie;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -13,5 +14,5 @@ public class DTOMovie {
 
     private String coverPhotoUrl;
 
-    private Date date;
+    private LocalDateTime date;
 }
