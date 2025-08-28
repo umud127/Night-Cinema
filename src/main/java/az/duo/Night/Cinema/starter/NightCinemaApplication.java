@@ -21,6 +21,10 @@ import java.sql.SQLException;
 public class NightCinemaApplication {
 
 	public static void main(String[] args) throws SQLException {
+
+        Dotenv dotenv = Dotenv.load();
+
+        System.
 		SpringApplication.run(NightCinemaApplication.class, args);
 	}
 
