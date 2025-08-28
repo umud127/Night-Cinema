@@ -31,19 +31,22 @@ public class RestUserServiceIMPL implements IRestUserService {
         Long id = jwtService.extractIdFromToken(token);
 
         if(id == null) {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/me");
+            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/me");
         }
 
         if(!restUserRepo.existsById(id)) {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/me");
+            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/me");
         }
 
         Optional<User> dbUser = restUserRepo.findById(id);
 
         if(dbUser.isPresent()) {
             DTOUserInfo user = new DTOUserInfo();
-            BeanUtils.copyProperties(dbUser.get(), user);
-            //eger menimsedilmeyen varsa manual menimsedecem
+
+            user.setUsername(dbUser.get().getRealUsername());
+            user.setPhoneNumber(dbUser.get().getPhoneNumber());
+            user.setCreatedAt(dbUser.get().getCreatedAt());
+
             return BaseEntity.ok(user);
         }
 
@@ -54,19 +57,19 @@ public class RestUserServiceIMPL implements IRestUserService {
         Long id = jwtService.extractIdFromToken(token);
 
         if(id == null) {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/me");
+            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/security");
         }
 
         if(!restUserRepo.existsById(id)) {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/me");
+            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/security");
         }
 
         Optional<User> dbUser = restUserRepo.findById(id);
 
         if(dbUser.isPresent()) {
             DTOUserSecurity user = new DTOUserSecurity();
-            BeanUtils.copyProperties(dbUser.get(), user);
-            //eger menimsedilmeyen varsa manual menimsedecem
+            user.setEmail(dbUser.get().getEmail());
+
             return BaseEntity.ok(user);
         }
 
@@ -77,11 +80,11 @@ public class RestUserServiceIMPL implements IRestUserService {
         Long id = jwtService.extractIdFromToken(token);
 
         if(id == null) {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/me");
+            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/movie");
         }
 
         if(!restUserRepo.existsById(id)) {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/me");
+            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/movie");
         }
 
         Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
@@ -117,4 +120,5 @@ public class RestUserServiceIMPL implements IRestUserService {
     public BaseEntity<DTOUserSecurity> updateUser(String token, DTOUserIU user) {
         return null;
     }
+
 }
