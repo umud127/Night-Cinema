@@ -1,11 +1,13 @@
 package az.duo.Night.Cinema.dto.user;
 
 import az.duo.Night.Cinema.dto.movie.DTOMovie;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 public class DTOUserMovie {
 
     private int gotMovies = 0;
