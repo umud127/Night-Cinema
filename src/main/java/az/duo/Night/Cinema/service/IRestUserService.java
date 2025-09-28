@@ -14,5 +14,5 @@ public interface IRestUserService {
 
     BaseEntity<DTOUserMovie> getUserMovie(String token);
 
-    BaseEntity<DTOUserSecurity> updateUser(String token, DTOUserIU user);
+    BaseEntity<String> updateUser(String token, DTOUserIU user);
 }

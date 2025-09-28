@@ -117,7 +117,8 @@ public class RestUserServiceIMPL implements IRestUserService {
     }
 
     @Override
-    public BaseEntity<DTOUserSecurity> updateUser(String token, DTOUserIU user) {
+    public BaseEntity<String> updateUser(String token, DTOUserIU user) {
+        String response;
         return null;
     }
 

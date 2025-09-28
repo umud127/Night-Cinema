@@ -36,7 +36,7 @@ public class RestUserControllerIMPL implements IRestUserController {
     }
 
     @PutMapping(path = "/update")
-    public BaseEntity<DTOUserSecurity> updateUser(@RequestHeader("Authorization") String token, @RequestBody DTOUserIU user) {
+    public BaseEntity<String> updateUser(@RequestHeader("Authorization") String token, @RequestBody DTOUserIU user) {
         return restUserService.updateUser(token.substring(7), user);
     }
 }

@@ -24,7 +24,7 @@ public class Movie {
     @Column(unique = true, name = "name")
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "cover_photo_url")
