@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,9 +25,13 @@ public class SecurityConfig {
     private static final String AUTH = "/api/auth/**";
     private static final String USER = "/api/user/**";
     private static final String ADMIN = "/api/admin/**";
+
     private static final String SWAGGER = "/swagger-ui/**";
     private static final String V3 = "/v3/api-docs/**";
     private static final String SWAGGER_UI = "/swagger-ui.html";
+    private static final String SWAGGER_UI_INDEX = "/swagger-ui/index.html";
+    private static final String WEBJARS = "/webjars/**";
+    private static final String SWAGGER_RESOURCES = "/swagger-resources/**";
 
     private final AuthEntryPoint authEntryPoint;
     private final AuthenticationProvider authProvider;
@@ -48,6 +53,9 @@ public class SecurityConfig {
                                         .requestMatchers(SWAGGER).permitAll()
                                         .requestMatchers(V3).permitAll()
                                         .requestMatchers(SWAGGER_UI).permitAll()
+                                        .requestMatchers(SWAGGER_UI_INDEX).permitAll()
+                                        .requestMatchers(WEBJARS).permitAll()
+                                        .requestMatchers(SWAGGER_RESOURCES).permitAll()
 
                                         .requestMatchers(AUTH).permitAll()
 
@@ -67,4 +75,12 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return web -> web.ignoring().requestMatchers(
+                "/swagger-ui/**", "/v3/api-docs/**"
+        );
+    }
+
 }

@@ -32,8 +32,10 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String username;
 
         header = request.getHeader("Authorization");
-
         String requestPath = request.getServletPath();
+
+        logger.info("Request path: {}", requestPath);
+        logger.info("Authorization header: {}", header);
         if (requestPath.startsWith("/api/auth/register") ||
                 requestPath.startsWith("/api/auth/authentication") ||
                 requestPath.startsWith("/v3/api-docs") ||
