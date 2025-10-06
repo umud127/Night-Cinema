@@ -25,7 +25,7 @@ public class SecurityConfig {
     private static final String USER = "/api/user/**";
     private static final String ADMIN = "/api/admin/**";
     private static final String SWAGGER = "/swagger-ui/**";
-    private static final String V3 = "/v3/api-docs/**";
+    private static final String V3 = "/v3/api-docs";
 
     private final AuthEntryPoint authEntryPoint;
     private final AuthenticationProvider authProvider;
