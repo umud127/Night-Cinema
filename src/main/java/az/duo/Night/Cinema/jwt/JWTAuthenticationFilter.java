@@ -37,7 +37,9 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         if (requestPath.startsWith("/api/auth/register") ||
                 requestPath.startsWith("/api/auth/authentication") ||
                 requestPath.startsWith("/v3/api-docs") ||
-                requestPath.startsWith("/swagger-ui")
+                requestPath.startsWith("/swagger-ui") ||
+                requestPath.equals("/swagger-ui.html") ||
+                requestPath.equals("/swagger-ui/index.html")
         ) {
             filterChain.doFilter(request, response);
             return;
