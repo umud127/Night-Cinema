@@ -19,12 +19,12 @@ public class NightCinemaApplication {
 
 	public static void main(String[] args) throws SQLException {
 
-        Dotenv dotenv = Dotenv.load();
-
-        // System environment-ə set et ki, Spring `${}` ilə oxuya bilsin
-        dotenv.entries().forEach(entry ->
-                System.setProperty(entry.getKey(), entry.getValue())
-        );
+//        Dotenv dotenv = Dotenv.load();
+//
+//        // System environment-ə set et ki, Spring `${}` ilə oxuya bilsin
+//        dotenv.entries().forEach(entry ->
+//                System.setProperty(entry.getKey(), entry.getValue())
+//        );
 
 		SpringApplication.run(NightCinemaApplication.class, args);
 	}
