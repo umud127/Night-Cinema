@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DTOMovie {
+public class DTOMovie2 {
 
     private String name;
 
@@ -18,4 +18,6 @@ public class DTOMovie {
     private String coverPhotoUrl;
 
     private Long movieDuration;
+
+    private LocalDateTime startTime;
 }

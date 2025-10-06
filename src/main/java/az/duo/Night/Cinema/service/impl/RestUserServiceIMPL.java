@@ -1,6 +1,7 @@
 package az.duo.Night.Cinema.service.impl;
 
 import az.duo.Night.Cinema.dto.movie.DTOMovie;
+import az.duo.Night.Cinema.dto.movie.DTOMovie2;
 import az.duo.Night.Cinema.dto.user.DTOUserIU;
 import az.duo.Night.Cinema.dto.user.DTOUserInfo;
 import az.duo.Night.Cinema.dto.user.DTOUserMovie;
@@ -65,27 +66,27 @@ public class RestUserServiceIMPL implements IRestUserService {
         Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
 
         if(dbUser.isPresent()) {
-            DTOUserMovie user = new DTOUserMovie();
+            DTOUserMovie userMovie = new DTOUserMovie();
 
             List<MovieSession> movies = dbUser.get();
-            List<DTOMovie> dtoMovies = new ArrayList<>();
+            List<DTOMovie2> dtoMovies = new ArrayList<>();
 
             for(MovieSession movieSession : movies) {
-                DTOMovie dtoMovie = new DTOMovie();
+                DTOMovie2 dtoMovie2 = new DTOMovie2();
 
-                dtoMovie.setName(movieSession.getMovie().getName());
-                dtoMovie.setDescription(movieSession.getMovie().getDescription());
-                dtoMovie.setDate(movieSession.getStartTime());
+                dtoMovie2.setName(movieSession.getMovie().getName());
+                dtoMovie2.setDescription(movieSession.getMovie().getDescription());
+                dtoMovie2.setStartTime(movieSession.getStartTime());
+                dtoMovie2.setMovieDuration(movieSession.getMovie().getMovieDuration());
+                dtoMovie2.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
 
-                dtoMovie.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
-
-                dtoMovies.add(dtoMovie);
+                dtoMovies.add(dtoMovie2);
             }
 
-            user.setGotMovies(dtoMovies.size());
-            user.setMovies(dtoMovies);
+            userMovie.setGotMovies(dtoMovies.size());
+            userMovie.setMovies(dtoMovies);
 
-            return BaseEntity.ok(user);
+            return BaseEntity.ok(userMovie);
         }
 
         return BaseEntity.notOk(StatusCode.INTERNAL_SERVER_ERROR, "Server Error: Unexpected Error", "/me");

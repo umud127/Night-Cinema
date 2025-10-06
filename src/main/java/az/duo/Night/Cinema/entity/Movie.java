@@ -31,6 +31,12 @@ public class Movie {
     @Column(name = "view_count")
     private Long viewCount;
 
+    @Column(name = "movie_duration")
+    private Long movieDuration;
+
+    @Column(name = "star_movie", columnDefinition = "BOOLEAN DEFAULT FALSE")
+    private boolean starMovie;
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieSession> movieSessions = new ArrayList<>();
 }
