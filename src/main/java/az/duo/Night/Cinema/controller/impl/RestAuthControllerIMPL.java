@@ -28,8 +28,8 @@ public class RestAuthControllerIMPL implements IRestAuthController {
 
     @PostMapping("/login")
     @Override
-    public BaseEntity<AuthResponse> authentication(@RequestBody AuthRequest request) {
-        return restAuthService.authentication(request);
+    public BaseEntity<AuthResponse> authenticate(@RequestBody AuthRequest request) {
+        return restAuthService.authenticate(request);
     }
 
     @PostMapping("/refresh_token")

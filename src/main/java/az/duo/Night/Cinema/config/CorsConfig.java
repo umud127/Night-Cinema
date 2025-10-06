@@ -14,9 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         // inkişaf mərhələsində
-                        .allowedOrigins("http://127.0.0.1:3000") //fiver.com
-                        // prod üçün frontend host yazacaqsan, məsələn:
-                        // .allowedOrigins("https://my-frontend.com")
+                        .allowedOrigins("http://127.0.0.1:3000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

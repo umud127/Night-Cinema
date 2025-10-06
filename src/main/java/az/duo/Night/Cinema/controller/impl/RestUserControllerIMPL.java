@@ -4,7 +4,6 @@ import az.duo.Night.Cinema.controller.IRestUserController;
 import az.duo.Night.Cinema.dto.user.DTOUserIU;
 import az.duo.Night.Cinema.dto.user.DTOUserInfo;
 import az.duo.Night.Cinema.dto.user.DTOUserMovie;
-import az.duo.Night.Cinema.dto.user.DTOUserSecurity;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.service.IRestUserService;
 import lombok.RequiredArgsConstructor;
@@ -21,12 +20,6 @@ public class RestUserControllerIMPL implements IRestUserController {
     @Override
     public BaseEntity<DTOUserInfo> getUserInfo(@RequestHeader("Authorization") String token) {
         return restUserService.getUserInfo(token.substring(7));
-    }
-
-    @GetMapping(path = "/security")
-    @Override
-    public BaseEntity<DTOUserSecurity> getUserSecurity(@RequestHeader("Authorization") String token) {
-        return restUserService.getUserSecurity(token.substring(7));
     }
 
     @GetMapping(path = "/movie")

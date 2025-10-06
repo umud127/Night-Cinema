@@ -11,7 +11,7 @@ public interface IRestAuthService {
 
     BaseEntity<AuthResponse> register(RegisterRequest request);
 
-    BaseEntity<AuthResponse> authentication(AuthRequest request);
+    BaseEntity<AuthResponse> authenticate(AuthRequest request);
 
     BaseEntity<AuthResponse> refreshToken(RefreshTokenRequest request);
 }

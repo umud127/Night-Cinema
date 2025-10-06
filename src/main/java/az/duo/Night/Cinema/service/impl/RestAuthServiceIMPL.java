@@ -46,7 +46,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
     }
 
     @Override
-    public BaseEntity<AuthResponse> authentication(AuthRequest request) {
+    public BaseEntity<AuthResponse> authenticate(AuthRequest request) {
         if(request.getEmail() == null || request.getPassword() == null) {
             return BaseEntity.notOk(StatusCode.BAD_REQUEST, "email and password are required", "/login");
         }
