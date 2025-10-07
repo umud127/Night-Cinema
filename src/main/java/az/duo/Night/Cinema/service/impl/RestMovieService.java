@@ -53,9 +53,12 @@ public class RestMovieService implements IRestMovieService {
     }
 
     @Override
-    public BaseEntity<List<DTOMovie>> getMoviesByName(String language) {
+    public BaseEntity<List<DTOMovie>> getMoviesByName(String movieName) {
         try {
-            List<DTOMovie> dbMovies = restMovieRepo.findAllByNameStartingWith(language);
+            // Parametrə % əlavə edirik ki, LIKE işləsin
+            String searchPattern = movieName.toLowerCase() + "%";
+
+            List<DTOMovie> dbMovies = restMovieRepo.findAllByNameStartingWith(searchPattern);
 
             if(dbMovies != null && !dbMovies.isEmpty()) {
                 return BaseEntity.ok(dbMovies);

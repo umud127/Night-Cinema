@@ -25,6 +25,8 @@ public class SecurityConfig {
     private static final String AUTH = "/api/auth/**";
     private static final String USER = "/api/user/**";
     private static final String ADMIN = "/api/admin/**";
+    private static final String MOVIE = "/api/movie/**";
+    private static final String MOVIE_SEARCH = "/api/movie/by_name/**";
 
     private static final String SWAGGER = "/swagger-ui/**";
     private static final String V3 = "/v3/api-docs/**";
@@ -58,9 +60,12 @@ public class SecurityConfig {
                                         .requestMatchers(SWAGGER_RESOURCES).permitAll()
 
                                         .requestMatchers(AUTH).permitAll()
+                                        .requestMatchers(MOVIE).permitAll()
+                                        .requestMatchers(MOVIE_SEARCH).permitAll()
 
-                                        .requestMatchers(USER).permitAll()   //.hasRole("USER")
+                                        .requestMatchers(USER).hasRole("USER")
                                         .requestMatchers(ADMIN).hasRole("ADMIN")
+
                                         .anyRequest()
                                         .authenticated()
                 )

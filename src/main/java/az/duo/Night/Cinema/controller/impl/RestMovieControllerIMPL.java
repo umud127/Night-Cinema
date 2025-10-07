@@ -5,9 +5,7 @@ import az.duo.Night.Cinema.dto.movie.DTOMovie;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.service.IRestMovieService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,9 +28,9 @@ public class RestMovieControllerIMPL implements IRestMovieController {
         return restMovieService.getAllMovies();
     }
 
-    @GetMapping("/by_name")
+    @GetMapping("/by_name/{movieName}")
     @Override
-    public BaseEntity<List<DTOMovie>> getMoviesByName(String language) {
-        return restMovieService.getMoviesByName(language);
+    public BaseEntity<List<DTOMovie>> getMoviesByName(@PathVariable(name = "movieName") String movieName) {
+        return restMovieService.getMoviesByName(movieName);
     }
 }
