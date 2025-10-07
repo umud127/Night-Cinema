@@ -14,7 +14,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         // inkişaf mərhələsində
-                        .allowedOrigins("http://localhost:5000")
+                        .allowedOrigins("http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:3333", "http://localhost:5000")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
