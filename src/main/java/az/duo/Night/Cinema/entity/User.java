@@ -2,6 +2,9 @@ package az.duo.Night.Cinema.entity;
 
 import az.duo.Night.Cinema.enums.RoleName;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -27,15 +30,24 @@ public class User implements UserDetails {
     @Column(unique = true, name = "username")
     private String username;
 
+    @Pattern(
+            regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
+            message = "Invalid email format (e.g., example@mail.com)"
+    )
     @Column(unique = true, name = "email")
     private String email;
 
-//    @Size(min = 8, max = 25)
     @Column(name = "password")
     private String password;
 
     @Column(name = "phone_number")
     private String phoneNumber;
+
+    @Size(min = 8, max = 16)
+    @Pattern(regexp = "^\\+?[1-9]\\d{7,14}$",
+            message = "Phone number must be in E.164 format (e.g., +994501234567)")
+    @Column(name = "phone_e164", length = 16)
+    private String phoneE164;
 
     @Column(name = "got_movies")
     private int gotMovies = 0;

@@ -23,7 +23,7 @@ public class JWTService {
     @Value("${secret_key}")
     private String SECRET_KEY;
 
-    @Value("${access_token_expiration}")
+    @Value("3600000")
     private Long ACCESS_TOKEN_EXPIRATION; // milliseconds
 
     @Value("${refresh_token_expiration}")
