@@ -1,6 +1,5 @@
 package az.duo.Night.Cinema.service.impl;
 
-import az.duo.Night.Cinema.dto.movie.DTOMovie;
 import az.duo.Night.Cinema.dto.movie.DTOMovie2;
 import az.duo.Night.Cinema.dto.user.DTOUserIU;
 import az.duo.Night.Cinema.dto.user.DTOUserInfo;
@@ -43,7 +42,7 @@ public class RestUserServiceIMPL implements IRestUserService {
             DTOUserInfo user = new DTOUserInfo();
 
             user.setUsername(dbUser.get().getRealUsername());
-            user.setPhoneNumber(dbUser.get().getPhoneNumber());
+            user.setPhoneNumber(dbUser.get().getPhoneE164());
             user.setCreatedAt(dbUser.get().getCreatedAt());
 
             return BaseEntity.ok(user);
@@ -57,45 +56,70 @@ public class RestUserServiceIMPL implements IRestUserService {
 
         if(id == null) {
             return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/movie");
-        }
-
-        if(!restUserRepo.existsById(id)) {
+        } else if(!restUserRepo.existsById(id)) {
             return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/movie");
-        }
+        } else {
+            try {
+                Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
 
-        Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
+                DTOUserMovie userMovie = new DTOUserMovie();
 
-        if(dbUser.isPresent()) {
-            DTOUserMovie userMovie = new DTOUserMovie();
+                List<MovieSession> movies = dbUser.get();
+                List<DTOMovie2> dtoMovies = new ArrayList<>();
 
-            List<MovieSession> movies = dbUser.get();
-            List<DTOMovie2> dtoMovies = new ArrayList<>();
+                for(MovieSession movieSession : movies) {
+                    DTOMovie2 dtoMovie2 = new DTOMovie2();
 
-            for(MovieSession movieSession : movies) {
-                DTOMovie2 dtoMovie2 = new DTOMovie2();
+                    dtoMovie2.setName(movieSession.getMovie().getName());
+                    dtoMovie2.setDescription(movieSession.getMovie().getDescription());
+                    dtoMovie2.setStartTime(movieSession.getStartTime());
+                    dtoMovie2.setMovieDuration(movieSession.getMovie().getMovieDuration());
+                    dtoMovie2.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
 
-                dtoMovie2.setName(movieSession.getMovie().getName());
-                dtoMovie2.setDescription(movieSession.getMovie().getDescription());
-                dtoMovie2.setStartTime(movieSession.getStartTime());
-                dtoMovie2.setMovieDuration(movieSession.getMovie().getMovieDuration());
-                dtoMovie2.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
+                    dtoMovies.add(dtoMovie2);
+                }
 
-                dtoMovies.add(dtoMovie2);
+                userMovie.setGotMovies(dtoMovies.size());
+                userMovie.setMovies(dtoMovies);
+
+                return BaseEntity.ok(userMovie);
+            } catch (Exception e) {
+                return BaseEntity.notOk(
+                        StatusCode.INTERNAL_SERVER_ERROR,
+                        "Server Error: Unexpected Error." + " Additional Message + " + e.getMessage(),
+                        "/me");
             }
-
-            userMovie.setGotMovies(dtoMovies.size());
-            userMovie.setMovies(dtoMovies);
-
-            return BaseEntity.ok(userMovie);
         }
-
-        return BaseEntity.notOk(StatusCode.INTERNAL_SERVER_ERROR, "Server Error: Unexpected Error", "/me");
     }
 
     @Override
     public BaseEntity<String> updateUser(String token, DTOUserIU user) {
-        //on progress
-        return null;
+        Long id = jwtService.extractIdFromToken(token);
+
+        if(id == null) {
+            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/update");
+        } else if(!restUserRepo.existsById(id)) {
+            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/update");
+        } else {
+            restUserRepo.findById(id).ifPresent(user1 -> {
+                if (user.getPhoneNumber() != null) {
+                    user1.setPhoneE164(user.getPhoneNumber());
+                }
+                if (user.getEmail() != null) {
+                    user1.setEmail(user.getEmail());
+                }
+                if (user.getUsername() != null) {
+                    user1.setUsername(user.getUsername());
+                }
+                if (user.getPassword() != null) {
+                    user1.setPassword(user.getPassword());
+                }
+
+                restUserRepo.save(user1);
+            });
+
+            return BaseEntity.ok("User Updated Successfully");
+        }
     }
 
 }
