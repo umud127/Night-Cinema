@@ -39,7 +39,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Pattern(regexp = "\\d+", message = "Field must contain only digits")
+    @Pattern(regexp = "^\\+?[1-9]\\d{7,14}$", message = "Field must contain only digits")
     @Column(name = "phone_number")
     private String phoneNumber;
 
