@@ -42,6 +42,8 @@ public class RestAuthServiceIMPL implements IRestAuthService {
 
         newUser.setUsername(request.getUsername());
 
+        newUser.setProfilePhotoUrl("http://res.cloudinary.com/dvusim2rf/image/upload/v1760720515/hu8eqetp1qmn4krc2mdk.webp");
+
         restUserRepo.save(newUser);
 
         AuthResponse response = new AuthResponse();
