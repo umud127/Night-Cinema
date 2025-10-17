@@ -32,6 +32,10 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             return BaseEntity.notOk(StatusCode.BAD_REQUEST, "username is already taken", "/register");
         }
 
+        if(request.getPassword().length() < 8) {
+            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "password must be at least 8 characters long", "/register");
+        }
+
         User newUser = new User();
 
         newUser.setEmail(request.getEmail());
