@@ -48,14 +48,16 @@ public class User implements UserDetails {
     @Column(name = "phone_e164", length = 16)
     private String phoneE164;
 
-    @Column(name = "got_movies")
+    @Column(name = "got_movies", nullable = false, columnDefinition = "int default 0")
     private int gotMovies = 0;
 
-    @Column(name = "got_tickets")
+    @Column(name = "got_tickets", nullable = false, columnDefinition = "int default 0")
     private int gotTickets = 0;
 
-//    @Column(name = "profile_photo_url" , columnDefinition = "text deafult '' ", nullable = false)
-//    private String profilePhotoUrl;
+    @Column(name = "profile_photo_url" ,
+            columnDefinition = "text default 'http://res.cloudinary.com/dvusim2rf/image/upload/v1760720515/hu8eqetp1qmn4krc2mdk.webp' ",
+            nullable = false)
+    private String profilePhotoUrl;
 
     //Enums(constant variables)
     @Enumerated(EnumType.STRING)

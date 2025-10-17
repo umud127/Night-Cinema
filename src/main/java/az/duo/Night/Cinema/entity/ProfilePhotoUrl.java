@@ -17,6 +17,6 @@ public class ProfilePhotoUrl {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "profile_photo_url" , columnDefinition = "text default '' ", nullable = false)
+    @Column(name = "profile_photo_url", nullable = false)
     private String profilePhotoUrl;
 }
