@@ -28,6 +28,10 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             return BaseEntity.notOk(StatusCode.BAD_REQUEST, "email is already taken", "/register");
         }
 
+        if(restUserRepo.existsByUsername(request.getUsername())) {
+            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "username is already taken", "/register");
+        }
+
         User newUser = new User();
 
         newUser.setEmail(request.getEmail());

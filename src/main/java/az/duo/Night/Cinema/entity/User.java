@@ -25,7 +25,8 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, name = "username")
+    @Size(min = 2, message = "The name must be at least 2 characters long")
+    @Column(unique = true, name = "username", nullable = false)
     private String username;
 
     @Pattern(
