@@ -2,8 +2,6 @@ package az.duo.Night.Cinema.entity;
 
 import az.duo.Night.Cinema.enums.RoleName;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -52,6 +50,12 @@ public class User implements UserDetails {
 
     @Column(name = "got_movies")
     private int gotMovies = 0;
+
+    @Column(name = "got_tickets")
+    private int gotTickets = 0;
+
+//    @Column(name = "profile_photo_url" , columnDefinition = "text deafult '' ", nullable = false)
+//    private String profilePhotoUrl;
 
     //Enums(constant variables)
     @Enumerated(EnumType.STRING)
