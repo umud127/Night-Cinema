@@ -3,6 +3,7 @@ package az.duo.Night.Cinema.service.impl;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.StatusCode;
+import az.duo.Night.Cinema.exception.BadRequestException;
 import az.duo.Night.Cinema.jwt.*;
 import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestAuthService;
@@ -23,19 +24,19 @@ public class RestAuthServiceIMPL implements IRestAuthService {
     @Transactional(rollbackOn = Exception.class)
     public BaseEntity<AuthResponse> register(RegisterRequest request) {
         if(request.getEmail() == null || request.getPassword() == null || request.getUsername() == null || request.getPhoneNumber() == null) {
-            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "email, password, username and phoneNumber are required", "/register");
+            throw new BadRequestException("email, password, username and phoneNumber are required", "/register");
         }
 
         if(restUserRepo.existsByEmail(request.getEmail())) {
-            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "email is already taken", "/register");
+            throw new BadRequestException("email is already taken", "/register");
         }
 
         if(restUserRepo.existsByUsername(request.getUsername())) {
-            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "username is already taken", "/register");
+            throw new BadRequestException("username is already taken", "/register");
         }
 
         if(request.getPassword().length() < 8) {
-            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "password must be at least 8 characters long", "/register");
+            throw new BadRequestException("password must be at least 8 characters long", "/register");
         }
 
         User newUser = new User();
@@ -63,7 +64,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
     @Override
     public BaseEntity<AuthResponse> authenticate(AuthRequest request) {
         if(request.getEmail() == null || request.getPassword() == null) {
-            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "email and password are required", "/login");
+            throw new BadRequestException("email and password are required", "/login");
         }
 
         User user = restUserRepo.findByEmail(request.getEmail()).orElse(null);

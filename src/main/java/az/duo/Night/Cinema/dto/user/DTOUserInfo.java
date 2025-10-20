@@ -10,5 +10,5 @@ public class DTOUserInfo {
     private String username;
     private String phoneNumber;
     private Date createdAt;
-
+    private String profilePhotoUrl;
 }

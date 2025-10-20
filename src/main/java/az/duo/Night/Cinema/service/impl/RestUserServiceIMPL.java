@@ -44,6 +44,7 @@ public class RestUserServiceIMPL implements IRestUserService {
             user.setUsername(dbUser.get().getRealUsername());
             user.setPhoneNumber(dbUser.get().getPhoneE164());
             user.setCreatedAt(dbUser.get().getCreatedAt());
+            user.setProfilePhotoUrl(dbUser.get().getProfilePhotoUrl());
 
             return BaseEntity.ok(user);
         }
