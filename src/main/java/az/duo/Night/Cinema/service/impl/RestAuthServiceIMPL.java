@@ -113,6 +113,6 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             return BaseEntity.ok(response);
         }
 
-        return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/refresh");
+        throw new BadRequestException("User Not Found", "/refresh");
     }
 }
