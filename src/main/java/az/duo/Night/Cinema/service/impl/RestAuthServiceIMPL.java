@@ -6,6 +6,7 @@ import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.jwt.*;
 import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestAuthService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public BaseEntity<AuthResponse> register(RegisterRequest request) {
         if(request.getEmail() == null || request.getPassword() == null || request.getUsername() == null || request.getPhoneNumber() == null) {
             return BaseEntity.notOk(StatusCode.BAD_REQUEST, "email, password, username and phoneNumber are required", "/register");
