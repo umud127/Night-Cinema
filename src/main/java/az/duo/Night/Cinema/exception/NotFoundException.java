@@ -1,5 +1,8 @@
 package az.duo.Night.Cinema.exception;
 
+import lombok.Getter;
+
+@Getter
 public class NotFoundException extends RuntimeException {
 
     String path;
@@ -13,7 +16,4 @@ public class NotFoundException extends RuntimeException {
         this.path = path;
     }
 
-    public String getPath() {
-        return path;
-    }
 }

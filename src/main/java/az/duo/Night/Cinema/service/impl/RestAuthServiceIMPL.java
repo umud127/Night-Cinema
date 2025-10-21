@@ -4,6 +4,8 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.exception.BadRequestException;
+import az.duo.Night.Cinema.exception.NotFoundException;
+import az.duo.Night.Cinema.exception.UnauthorizedUserException;
 import az.duo.Night.Cinema.jwt.*;
 import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestAuthService;
@@ -79,9 +81,9 @@ public class RestAuthServiceIMPL implements IRestAuthService {
         }
 
         if(user == null) {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "email not found", "/login");
+            throw new NotFoundException("email not found", "/login");
         } else {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "password is incorrect", "/login");
+            throw new UnauthorizedUserException("email and password do not match", "/login");
         }
     }
 
@@ -90,7 +92,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
 
         String refreshToken = request.getRefreshToken();
         if(refreshToken == null || refreshToken.isBlank()) {
-            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "refreshToken is required", "/refresh");
+            throw new BadRequestException("refreshToken is required", "/refresh");
         }
 
         boolean tokenIsExpired = jwtService.isTokenExpired(refreshToken);
@@ -99,7 +101,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
         if (!tokenIsExpired) {
             username = jwtService.extractUsername(refreshToken);
         } else {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "refreshToken is expired", "/refresh");
+            throw new UnauthorizedUserException("refreshToken is expired", "/refresh");
         }
 
         User user = restUserRepo.findByEmail(username).orElse(null);
