@@ -14,7 +14,10 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         // inkişaf mərhələsində
-                        .allowedOrigins("https://nightcinema-6c5810225127.herokuapp.com", "http://localhost:5000" , "https://night-cinema.vercel.app")
+                        .allowedOrigins("https://nightcinema-6c5810225127.herokuapp.com",
+                                "http://localhost:5000" ,
+                                "http://192.168.101.3:5000" ,
+                                "https://night-cinema.vercel.app")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
