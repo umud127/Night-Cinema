@@ -1,4 +1,4 @@
-package az.duo.Night.Cinema.entity;
+package az.duo.Night.Cinema.enums;
 
 public enum Permission {
     ADD_USER, DELETE_USER, UPDATE_USER,

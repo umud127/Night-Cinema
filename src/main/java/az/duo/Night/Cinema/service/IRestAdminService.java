@@ -1,4 +1,4 @@
-package az.duo.Night.Cinema.controller;
+package az.duo.Night.Cinema.service;
 
 import az.duo.Night.Cinema.dto.admin.AdminMovieDTO;
 import az.duo.Night.Cinema.dto.admin.AdminMovieSessionDTO;
@@ -6,7 +6,7 @@ import az.duo.Night.Cinema.dto.admin.AdminUserDTO;
 import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 
-public interface IRestAdminController {
+public interface IRestAdminService {
 
     BaseEntity<String> addMovie(String token, AdminMovieDTO movie);
 
@@ -20,11 +20,6 @@ public interface IRestAdminController {
     BaseEntity<String> deleteUser(String token, Long id);
 
     BaseEntity<String> updateUser(String token, AdminUserDTO user);
-
-
-    BaseEntity<String> getUsers(String token);
-
-    BaseEntity<String> getAdmins(String token);
 
 
     BaseEntity<String> addSession(String token, AdminMovieSessionDTO session);

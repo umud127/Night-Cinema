@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public BaseEntity<String> handleException(Exception e) {
-        return BaseEntity.notOk(StatusCode.INTERNAL_SERVER_ERROR, e.getMessage(), null);
+        return BaseEntity.notOk(StatusCode.INTERNAL_SERVER_ERROR, e.getMessage() + "Error occurred for unknown reason", null);
     }
 
     @ExceptionHandler(BadRequestException.class)
