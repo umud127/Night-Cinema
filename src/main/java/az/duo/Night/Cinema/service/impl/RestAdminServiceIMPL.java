@@ -11,62 +11,64 @@ import org.springframework.stereotype.Service;
 @Service
 public class RestAdminServiceIMPL implements IRestAdminService {
     @Override
-    public BaseEntity<String> addMovie(String token, AdminMovieDTO movie) {
+    public BaseEntity<String> addMovie(AdminMovieDTO movie) {
+
+        return BaseEntity.ok("Movie was added");
+    }
+
+    @Override
+    public BaseEntity<String> deleteMovie(Long id) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> deleteMovie(String token, Long id) {
+    public BaseEntity<String> updateMovie(AdminMovieDTO movie) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> updateMovie(String token, AdminMovieDTO movie) {
+    public BaseEntity<String> addUser(AdminUserDTO user) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> addUser(String token, AdminUserDTO user) {
+    public BaseEntity<String> deleteUser(Long id) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> deleteUser(String token, Long id) {
+    public BaseEntity<String> updateUser(AdminUserDTO user) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> updateUser(String token, AdminUserDTO user) {
+    public BaseEntity<String> getUsers() {
         return null;
     }
 
     @Override
-    public BaseEntity<String> getUsers(String token) {
+    public BaseEntity<String> getAdmins() {
         return null;
     }
 
     @Override
-    public BaseEntity<String> getAdmins(String token) {
+    public BaseEntity<String> addSession(AdminMovieSessionDTO session) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> addSession(String token, AdminMovieSessionDTO session) {
+    public BaseEntity<String> deleteSession(Long id) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> deleteSession(String token, Long id) {
+    public BaseEntity<String> updateSession(AdminMovieSessionDTO session) {
         return null;
     }
 
     @Override
-    public BaseEntity<String> updateSession(String token, AdminMovieSessionDTO session) {
+    public BaseEntity<String> changePermission(ChangePermissionRequest request) {
         return null;
     }
 
-    @Override
-    public BaseEntity<String> changePermission(String token, ChangePermissionRequest request) {
-        return null;
-    }
 }

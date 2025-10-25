@@ -8,31 +8,31 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 
 public interface IRestAdminController {
 
-    BaseEntity<String> addMovie(String token, AdminMovieDTO movie);
+    BaseEntity<String> addMovie(AdminMovieDTO movie);
 
-    BaseEntity<String> deleteMovie(String token, Long id);
+    BaseEntity<String> deleteMovie(Long id);
 
-    BaseEntity<String> updateMovie(String token, AdminMovieDTO movie);
-
-
-    BaseEntity<String> addUser(String token, AdminUserDTO user);
-
-    BaseEntity<String> deleteUser(String token, Long id);
-
-    BaseEntity<String> updateUser(String token, AdminUserDTO user);
+    BaseEntity<String> updateMovie(AdminMovieDTO movie);
 
 
-    BaseEntity<String> getUsers(String token);
+    BaseEntity<String> addUser(AdminUserDTO user);
 
-    BaseEntity<String> getAdmins(String token);
+    BaseEntity<String> deleteUser(Long id);
 
-
-    BaseEntity<String> addSession(String token, AdminMovieSessionDTO session);
-
-    BaseEntity<String> deleteSession(String token, Long id);
-
-    BaseEntity<String> updateSession(String token, AdminMovieSessionDTO session);
+    BaseEntity<String> updateUser(AdminUserDTO user);
 
 
-    BaseEntity<String> changePermission(String token, ChangePermissionRequest request);
+    BaseEntity<String> getUsers();
+
+    BaseEntity<String> getAdmins();
+
+
+    BaseEntity<String> addSession(AdminMovieSessionDTO session);
+
+    BaseEntity<String> deleteSession(Long id);
+
+    BaseEntity<String> updateSession(AdminMovieSessionDTO session);
+
+
+    BaseEntity<String> changePermission(ChangePermissionRequest request);
 }

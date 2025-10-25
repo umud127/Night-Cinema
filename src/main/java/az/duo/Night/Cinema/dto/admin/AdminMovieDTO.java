@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -14,12 +17,13 @@ public class AdminMovieDTO {
     String name;
     String description;
     String coverPhotoUrl;
+
     Long movieDuration;
-    String language;
     String genre;
+
     String director;
-    String actors;
-    String releaseDate;
-    String rating;
+    List<String> actors;
+
+    LocalDate releaseDate;
     String trailerUrl;
 }

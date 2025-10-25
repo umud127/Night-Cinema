@@ -1,10 +1,12 @@
 package az.duo.Night.Cinema.entity;
 
+import az.duo.Night.Cinema.enums.Genre;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,6 +38,21 @@ public class Movie {
 
     @Column(name = "star_movie", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean starMovie;
+
+    @Column(name = "genre")
+    private List<Genre> genres = new ArrayList<>();
+
+    @Column(name = "director")
+    private String director;
+
+    @Column(name = "actor")
+    private List<String> actors = new ArrayList<>();
+
+    @Column(name = "release_date")
+    private LocalDate releaseDate;
+
+    @Column(name = "trailer_url")
+    private String trailerUrl;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieSession> movieSessions = new ArrayList<>();

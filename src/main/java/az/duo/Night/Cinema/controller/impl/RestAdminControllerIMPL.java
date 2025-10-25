@@ -21,84 +21,84 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addMovie")
-    public BaseEntity<String> addMovie(String token, AdminMovieDTO movie) {
-        return restAdminService.addMovie(token, movie);
+    public BaseEntity<String> addMovie(AdminMovieDTO movie) {
+        return restAdminService.addMovie(movie);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteMovie")
-    public BaseEntity<String> deleteMovie(String token, Long id) {
-        return restAdminService.deleteMovie(token, id);
+    public BaseEntity<String> deleteMovie(Long id) {
+        return restAdminService.deleteMovie(id);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateMovie")
-    public BaseEntity<String> updateMovie(String token, AdminMovieDTO movie) {
-        return restAdminService.updateMovie(token, movie);
+    public BaseEntity<String> updateMovie(AdminMovieDTO movie) {
+        return restAdminService.updateMovie(movie);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addUser")
-    public BaseEntity<String> addUser(String token, AdminUserDTO user) {
-        return restAdminService.addUser(token, user);
+    public BaseEntity<String> addUser(AdminUserDTO user) {
+        return restAdminService.addUser(user);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteUser")
-    public BaseEntity<String> deleteUser(String token, Long id) {
-        return restAdminService.deleteUser(token, id);
+    public BaseEntity<String> deleteUser(Long id) {
+        return restAdminService.deleteUser(id);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateUser")
-    public BaseEntity<String> updateUser(String token, AdminUserDTO user) {
-        return restAdminService.updateUser(token, user);
+    public BaseEntity<String> updateUser(AdminUserDTO user) {
+        return restAdminService.updateUser(user);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getUsers")
-    public BaseEntity<String> getUsers(String token) {
-        return restAdminService.getUsers(token);
+    public BaseEntity<String> getUsers() {
+        return restAdminService.getUsers();
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getAdmins")
-    public BaseEntity<String> getAdmins(String token) {
-        return restAdminService.getAdmins(token);
+    public BaseEntity<String> getAdmins() {
+        return restAdminService.getAdmins();
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addSession")
-    public BaseEntity<String> addSession(String token, AdminMovieSessionDTO session) {
-        return restAdminService.addSession(token, session);
+    public BaseEntity<String> addSession(AdminMovieSessionDTO session) {
+        return restAdminService.addSession(session);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteSession")
-    public BaseEntity<String> deleteSession(String token, Long id) {
-        return restAdminService.deleteSession(token, id);
+    public BaseEntity<String> deleteSession(Long id) {
+        return restAdminService.deleteSession(id);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateSession")
-    public BaseEntity<String> updateSession(String token, AdminMovieSessionDTO session) {
-        return restAdminService.updateSession(token, session);
+    public BaseEntity<String> updateSession(AdminMovieSessionDTO session) {
+        return restAdminService.updateSession( session);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/changePermission")
-    public BaseEntity<String> changePermission(String token, ChangePermissionRequest request) {
-        return restAdminService.changePermission(token, request);
+    public BaseEntity<String> changePermission(ChangePermissionRequest request) {
+        return restAdminService.changePermission(request);
     }
 }
