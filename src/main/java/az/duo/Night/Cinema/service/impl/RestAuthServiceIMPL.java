@@ -4,6 +4,7 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.exception.BadRequestException;
+import az.duo.Night.Cinema.exception.DataInsertException;
 import az.duo.Night.Cinema.exception.NotFoundException;
 import az.duo.Night.Cinema.exception.UnauthorizedUserException;
 import az.duo.Night.Cinema.jwt.*;
@@ -29,16 +30,17 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             throw new BadRequestException("email, password, username and phoneNumber are required", "/register");
         }
 
+        if(request.getPassword().length() < 8) {
+            throw new BadRequestException("password must be at least 8 characters long", "/register");
+        }
+
+
         if(restUserRepo.existsByEmail(request.getEmail())) {
-            throw new BadRequestException("email is already taken", "/register");
+            throw new DataInsertException("email is already taken", "/register");
         }
 
         if(restUserRepo.existsByUsername(request.getUsername())) {
-            throw new BadRequestException("username is already taken", "/register");
-        }
-
-        if(request.getPassword().length() < 8) {
-            throw new BadRequestException("password must be at least 8 characters long", "/register");
+            throw new DataInsertException("username is already taken", "/register");
         }
 
         User newUser = new User();
@@ -51,7 +53,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
 
         newUser.setUsername(request.getUsername());
 
-        newUser.setProfilePhotoUrl("http://res.cloudinary.com/dvusim2rf/image/upload/v1760720515/hu8eqetp1qmn4krc2mdk.webp");
+        newUser.setProfilePhotoUrl("https://res.cloudinary.com/dvusim2rf/image/upload/v1760720515/hu8eqetp1qmn4krc2mdk.webp");
 
         restUserRepo.save(newUser);
 
@@ -65,32 +67,39 @@ public class RestAuthServiceIMPL implements IRestAuthService {
 
     @Override
     public BaseEntity<AuthResponse> authenticate(AuthRequest request) {
-        if(request.getEmail() == null || request.getPassword() == null) {
+        if(request.getEmailOrUsername() == null || request.getPassword() == null) {
             throw new BadRequestException("email and password are required", "/login");
         }
 
-        User user = restUserRepo.findByEmail(request.getEmail()).orElse(null);
+        User user;
 
-        if(user != null && bCryptPasswordEncoder.matches(request.getPassword(), user.getPassword())) {
-            AuthResponse response = new AuthResponse();
-
-            response.setAccessToken(jwtService.generateToken(user));
-            response.setRefreshToken(jwtService.generateRefreshToken(user));
-
-            return BaseEntity.ok(response);
-        }
-
-        if(user == null) {
-            throw new NotFoundException("email not found", "/login");
+        if (request.getEmailOrUsername().contains("@")) {
+            user = restUserRepo.findByEmail(request.getEmailOrUsername()).orElse(null);
         } else {
-            throw new UnauthorizedUserException("email and password do not match", "/login");
+            user = restUserRepo.findByUsername(request.getEmailOrUsername()).orElse(null);
         }
+
+        if (user != null) {
+            if (bCryptPasswordEncoder.matches(request.getPassword(), user.getPassword())) {
+                AuthResponse response = new AuthResponse();
+
+                response.setAccessToken(jwtService.generateToken(user));
+                response.setRefreshToken(jwtService.generateRefreshToken(user));
+
+                return BaseEntity.ok(response);
+            } else {
+                throw new UnauthorizedUserException("email and password do not match", "/login");
+            }
+        }
+
+        throw new NotFoundException("email not found", "/login");
     }
 
     @Override
     public BaseEntity<AuthResponse> refreshToken(RefreshTokenRequest request) {
 
         String refreshToken = request.getRefreshToken();
+
         if(refreshToken == null || refreshToken.isBlank()) {
             throw new BadRequestException("refreshToken is required", "/refresh");
         }
@@ -98,6 +107,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
         boolean tokenIsExpired = jwtService.isTokenExpired(refreshToken);
 
         String username;
+
         if (!tokenIsExpired) {
             username = jwtService.extractUsername(refreshToken);
         } else {
@@ -115,6 +125,6 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             return BaseEntity.ok(response);
         }
 
-        throw new BadRequestException("User Not Found", "/refresh");
+        throw new NotFoundException("User Not Found", "/refresh");
     }
 }

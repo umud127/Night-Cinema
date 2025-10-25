@@ -7,8 +7,6 @@ import az.duo.Night.Cinema.dto.user.DTOUserMovie;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.MovieSession;
 import az.duo.Night.Cinema.entity.User;
-import az.duo.Night.Cinema.enums.StatusCode;
-import az.duo.Night.Cinema.exception.InternalServerException;
 import az.duo.Night.Cinema.exception.NotFoundException;
 import az.duo.Night.Cinema.exception.UnauthorizedUserException;
 import az.duo.Night.Cinema.jwt.JWTService;
@@ -41,18 +39,14 @@ public class RestUserServiceIMPL implements IRestUserService {
 
         Optional<User> dbUser = restUserRepo.findById(id);
 
-        if(dbUser.isPresent()) {
-            DTOUserInfo user = new DTOUserInfo();
+        DTOUserInfo user = new DTOUserInfo();
 
-            user.setUsername(dbUser.get().getRealUsername());
-            user.setPhoneNumber(dbUser.get().getPhoneE164());
-            user.setCreatedAt(dbUser.get().getCreatedAt());
-            user.setProfilePhotoUrl(dbUser.get().getProfilePhotoUrl());
+        user.setUsername(dbUser.get().getRealUsername());
+        user.setPhoneNumber(dbUser.get().getPhoneE164());
+        user.setCreatedAt(dbUser.get().getCreatedAt());
+        user.setProfilePhotoUrl(dbUser.get().getProfilePhotoUrl());
 
-            return BaseEntity.ok(user);
-        }
-
-        throw new InternalServerException("Server Error: Unexpected Error", "/me");
+        return BaseEntity.ok(user);
     }
 
     public BaseEntity<DTOUserMovie> getUserMovie(String token) {
@@ -64,33 +58,29 @@ public class RestUserServiceIMPL implements IRestUserService {
             throw new NotFoundException("User Not Found", "/user/movie");
         }
 
-        try {
-            Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
+        Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
 
-            DTOUserMovie userMovie = new DTOUserMovie();
+        DTOUserMovie userMovie = new DTOUserMovie();
 
-            List<MovieSession> movies = dbUser.get();
-            List<DTOMovie2> dtoMovies = new ArrayList<>();
+        List<MovieSession> movies = dbUser.get();
+        List<DTOMovie2> dtoMovies = new ArrayList<>();
 
-            for(MovieSession movieSession : movies) {
-                DTOMovie2 dtoMovie2 = new DTOMovie2();
+        for(MovieSession movieSession : movies) {
+            DTOMovie2 dtoMovie2 = new DTOMovie2();
 
-                dtoMovie2.setName(movieSession.getMovie().getName());
-                dtoMovie2.setDescription(movieSession.getMovie().getDescription());
-                dtoMovie2.setStartTime(movieSession.getStartTime());
-                dtoMovie2.setMovieDuration(movieSession.getMovie().getMovieDuration());
-                dtoMovie2.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
+            dtoMovie2.setName(movieSession.getMovie().getName());
+            dtoMovie2.setDescription(movieSession.getMovie().getDescription());
+            dtoMovie2.setStartTime(movieSession.getStartTime());
+            dtoMovie2.setMovieDuration(movieSession.getMovie().getMovieDuration());
+            dtoMovie2.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
 
-                dtoMovies.add(dtoMovie2);
-            }
-
-            userMovie.setGotMovies(dtoMovies.size());
-            userMovie.setMovies(dtoMovies);
-
-            return BaseEntity.ok(userMovie);
-        } catch (Exception e) {
-            throw new InternalServerException("Server Error: Unexpected Error." + " Additional Message + " + e.getMessage(), "/me");
+            dtoMovies.add(dtoMovie2);
         }
+
+        userMovie.setGotMovies(dtoMovies.size());
+        userMovie.setMovies(dtoMovies);
+
+        return BaseEntity.ok(userMovie);
     }
 
     @Override

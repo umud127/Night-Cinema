@@ -28,6 +28,10 @@ public class User implements UserDetails {
 
     @Size(min = 2, message = "The name must be at least 2 characters long")
     @Column(unique = true, name = "username", nullable = false)
+    @Pattern(
+            regexp = "^[a-zA-Z0-9]+$",
+            message = "Username should contain only letters and numbers"
+    )
     private String username;
 
     @Pattern(

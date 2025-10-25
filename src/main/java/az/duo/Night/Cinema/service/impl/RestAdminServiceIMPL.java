@@ -5,15 +5,52 @@ import az.duo.Night.Cinema.dto.admin.AdminMovieSessionDTO;
 import az.duo.Night.Cinema.dto.admin.AdminUserDTO;
 import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
+import az.duo.Night.Cinema.entity.Movie;
+import az.duo.Night.Cinema.enums.StatusCode;
+import az.duo.Night.Cinema.exception.DataInsertException;
 import az.duo.Night.Cinema.service.IRestAdminService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RestAdminServiceIMPL implements IRestAdminService {
-    @Override
-    public BaseEntity<String> addMovie(AdminMovieDTO movie) {
 
-        return BaseEntity.ok("Movie was added");
+    @Override
+    @Transactional
+    public BaseEntity<String> addMovie(AdminMovieDTO movie) {
+        if(
+                movie.getName() == null ||
+                movie.getDescription() == null ||
+                movie.getCoverPhotoUrl() == null ||
+
+                movie.getMovieDuration() == null ||
+                movie.getGenre() == null ||
+
+                movie.getDirector() == null ||
+                movie.getActors() == null ||
+
+                movie.getReleaseDate() == null ||
+                movie.getTrailerUrl() == null ||
+
+                movie.isStarMovie()
+        ) {
+            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "Some of the fields are empty", null);
+        }
+
+        Movie newMovie = new Movie();
+
+        newMovie.setName(movie.getName());
+        newMovie.setDescription(movie.getDescription());
+        newMovie.setCoverPhotoUrl(movie.getCoverPhotoUrl());
+
+        newMovie.setMovieDuration(movie.getMovieDuration());
+        newMovie.setGenres(movie.getGenre());
+
+        newMovie.setReleaseDate(movie.getReleaseDate());
+        newMovie.setTrailerUrl(movie.getTrailerUrl());
+        newMovie.setStarMovie(movie.isStarMovie());
+
+        return BaseEntity.ok("Movie was added successfully");
     }
 
     @Override
