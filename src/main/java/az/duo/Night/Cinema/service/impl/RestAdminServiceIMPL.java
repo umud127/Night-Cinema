@@ -41,6 +41,16 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     }
 
     @Override
+    public BaseEntity<String> getUsers(String token) {
+        return null;
+    }
+
+    @Override
+    public BaseEntity<String> getAdmins(String token) {
+        return null;
+    }
+
+    @Override
     public BaseEntity<String> addSession(String token, AdminMovieSessionDTO session) {
         return null;
     }

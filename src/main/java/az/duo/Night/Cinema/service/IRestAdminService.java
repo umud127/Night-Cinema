@@ -22,6 +22,11 @@ public interface IRestAdminService {
     BaseEntity<String> updateUser(String token, AdminUserDTO user);
 
 
+    BaseEntity<String> getUsers(String token);
+
+    BaseEntity<String> getAdmins(String token);
+
+
     BaseEntity<String> addSession(String token, AdminMovieSessionDTO session);
 
     BaseEntity<String> deleteSession(String token, Long id);

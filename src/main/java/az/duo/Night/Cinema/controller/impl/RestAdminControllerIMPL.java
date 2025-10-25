@@ -9,9 +9,7 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.service.IRestAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping( "/api/admin")
@@ -20,88 +18,87 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     private final IRestAdminService restAdminService;
 
-
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addMovie")
     public BaseEntity<String> addMovie(String token, AdminMovieDTO movie) {
-        return null;
+        return restAdminService.addMovie(token, movie);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/deleteMovie")
+    @DeleteMapping("/deleteMovie")
     public BaseEntity<String> deleteMovie(String token, Long id) {
-        return null;
+        return restAdminService.deleteMovie(token, id);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/updateMovie")
+    @PutMapping("/updateMovie")
     public BaseEntity<String> updateMovie(String token, AdminMovieDTO movie) {
-        return null;
+        return restAdminService.updateMovie(token, movie);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addUser")
     public BaseEntity<String> addUser(String token, AdminUserDTO user) {
-        return null;
+        return restAdminService.addUser(token, user);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/deleteUser")
+    @DeleteMapping("/deleteUser")
     public BaseEntity<String> deleteUser(String token, Long id) {
-        return null;
+        return restAdminService.deleteUser(token, id);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/updateUser")
+    @PutMapping("/updateUser")
     public BaseEntity<String> updateUser(String token, AdminUserDTO user) {
-        return null;
+        return restAdminService.updateUser(token, user);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/getUsers")
+    @GetMapping("/getUsers")
     public BaseEntity<String> getUsers(String token) {
-        return null;
+        return restAdminService.getUsers(token);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/getAdmins")
+    @GetMapping("/getAdmins")
     public BaseEntity<String> getAdmins(String token) {
-        return null;
+        return restAdminService.getAdmins(token);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addSession")
     public BaseEntity<String> addSession(String token, AdminMovieSessionDTO session) {
-        return null;
+        return restAdminService.addSession(token, session);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/deleteSession")
+    @DeleteMapping("/deleteSession")
     public BaseEntity<String> deleteSession(String token, Long id) {
-        return null;
+        return restAdminService.deleteSession(token, id);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/updateSession")
+    @PutMapping("/updateSession")
     public BaseEntity<String> updateSession(String token, AdminMovieSessionDTO session) {
-        return null;
+        return restAdminService.updateSession(token, session);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/changePermission")
+    @PutMapping("/changePermission")
     public BaseEntity<String> changePermission(String token, ChangePermissionRequest request) {
-        return null;
+        return restAdminService.changePermission(token, request);
     }
 }
