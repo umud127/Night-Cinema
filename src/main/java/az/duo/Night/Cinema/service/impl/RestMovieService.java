@@ -19,9 +19,9 @@ public class RestMovieService implements IRestMovieService {
     private final RestMovieRepo restMovieRepo;
 
     @Override
-    public BaseEntity<DTOMovie> getStarMovie() {
+    public BaseEntity<List<DTOMovie>> getStarMovie() {
         try {
-            DTOMovie starMovie = restMovieRepo.findStarMovie();
+            List<DTOMovie> starMovie = restMovieRepo.findStarMovie();
 
             if (starMovie != null) {
                 return BaseEntity.ok(starMovie);

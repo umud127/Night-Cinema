@@ -3,13 +3,12 @@ package az.duo.Night.Cinema.exception;
 import lombok.Getter;
 
 @Getter
-public class NotFoundException extends RuntimeException {
+public class DataInsertException extends RuntimeException {
 
     String path;
 
-    public NotFoundException(String message, String path) {
+    public DataInsertException(String message, String path) {
         super(message);
         this.path = path;
     }
-
 }

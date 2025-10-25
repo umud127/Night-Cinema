@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IRestMovieController {
 
-    BaseEntity<DTOMovie> getStarMovie();
+    BaseEntity<List<DTOMovie>> getStarMovie();
 
     BaseEntity<List<DTOMovie>> getAllMovies();
 

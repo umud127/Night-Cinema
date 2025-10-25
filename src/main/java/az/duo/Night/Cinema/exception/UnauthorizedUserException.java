@@ -3,11 +3,11 @@ package az.duo.Night.Cinema.exception;
 import lombok.Getter;
 
 @Getter
-public class NotFoundException extends RuntimeException {
+public class UnauthorizedUserException extends RuntimeException {
 
     String path;
 
-    public NotFoundException(String message, String path) {
+    public UnauthorizedUserException(String message, String path) {
         super(message);
         this.path = path;
     }

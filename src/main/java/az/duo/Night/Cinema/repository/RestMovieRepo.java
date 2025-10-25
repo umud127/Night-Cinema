@@ -22,7 +22,7 @@ public interface RestMovieRepo extends JpaRepository<Movie, Long> {
     @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
             "m.name, m.description, m.coverPhotoUrl, m.movieDuration) " +
             "FROM Movie m WHERE m.starMovie = true")
-    DTOMovie findStarMovie();
+    List<DTOMovie> findStarMovie();
 
     @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
             "m.name, m.description, m.coverPhotoUrl, m.movieDuration) " +

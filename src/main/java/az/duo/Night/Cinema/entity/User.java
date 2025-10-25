@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -27,6 +28,10 @@ public class User implements UserDetails {
 
     @Size(min = 2, message = "The name must be at least 2 characters long")
     @Column(unique = true, name = "username", nullable = false)
+    @Pattern(
+            regexp = "^[a-zA-Z0-9]+$",
+            message = "Username should contain only letters and numbers"
+    )
     private String username;
 
     @Pattern(
@@ -79,7 +84,7 @@ public class User implements UserDetails {
     //Spring security methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of((GrantedAuthority) () -> role.name());
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

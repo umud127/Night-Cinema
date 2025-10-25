@@ -18,7 +18,7 @@ public class RestMovieControllerIMPL implements IRestMovieController {
 
     @GetMapping("/star")
     @Override
-    public BaseEntity<DTOMovie> getStarMovie() {
+    public BaseEntity<List<DTOMovie>> getStarMovie() {
         return restMovieService.getStarMovie();
     }
 

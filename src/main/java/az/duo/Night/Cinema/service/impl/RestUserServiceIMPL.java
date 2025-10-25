@@ -7,7 +7,8 @@ import az.duo.Night.Cinema.dto.user.DTOUserMovie;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.MovieSession;
 import az.duo.Night.Cinema.entity.User;
-import az.duo.Night.Cinema.enums.StatusCode;
+import az.duo.Night.Cinema.exception.NotFoundException;
+import az.duo.Night.Cinema.exception.UnauthorizedUserException;
 import az.duo.Night.Cinema.jwt.JWTService;
 import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestUserService;
@@ -29,68 +30,57 @@ public class RestUserServiceIMPL implements IRestUserService {
         Long id = jwtService.extractIdFromToken(token);
 
         if(id == null) {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/me");
+            throw new UnauthorizedUserException("token is invalid", "/user/me");
         }
 
         if(!restUserRepo.existsById(id)) {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/me");
+            throw new NotFoundException("User Not Found", "/user/me");
         }
 
         Optional<User> dbUser = restUserRepo.findById(id);
 
-        if(dbUser.isPresent()) {
-            DTOUserInfo user = new DTOUserInfo();
+        DTOUserInfo user = new DTOUserInfo();
 
-            user.setUsername(dbUser.get().getRealUsername());
-            user.setPhoneNumber(dbUser.get().getPhoneE164());
-            user.setCreatedAt(dbUser.get().getCreatedAt());
-            user.setProfilePhotoUrl(dbUser.get().getProfilePhotoUrl());
+        user.setUsername(dbUser.get().getRealUsername());
+        user.setPhoneNumber(dbUser.get().getPhoneE164());
+        user.setCreatedAt(dbUser.get().getCreatedAt());
+        user.setProfilePhotoUrl(dbUser.get().getProfilePhotoUrl());
 
-            return BaseEntity.ok(user);
-        }
-
-        return BaseEntity.notOk(StatusCode.INTERNAL_SERVER_ERROR, "Server Error: Unexpected Error", "/me");
+        return BaseEntity.ok(user);
     }
 
     public BaseEntity<DTOUserMovie> getUserMovie(String token) {
         Long id = jwtService.extractIdFromToken(token);
 
         if(id == null) {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/movie");
+            throw new UnauthorizedUserException("token is invalid", "/user/movie");
         } else if(!restUserRepo.existsById(id)) {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/movie");
-        } else {
-            try {
-                Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
-
-                DTOUserMovie userMovie = new DTOUserMovie();
-
-                List<MovieSession> movies = dbUser.get();
-                List<DTOMovie2> dtoMovies = new ArrayList<>();
-
-                for(MovieSession movieSession : movies) {
-                    DTOMovie2 dtoMovie2 = new DTOMovie2();
-
-                    dtoMovie2.setName(movieSession.getMovie().getName());
-                    dtoMovie2.setDescription(movieSession.getMovie().getDescription());
-                    dtoMovie2.setStartTime(movieSession.getStartTime());
-                    dtoMovie2.setMovieDuration(movieSession.getMovie().getMovieDuration());
-                    dtoMovie2.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
-
-                    dtoMovies.add(dtoMovie2);
-                }
-
-                userMovie.setGotMovies(dtoMovies.size());
-                userMovie.setMovies(dtoMovies);
-
-                return BaseEntity.ok(userMovie);
-            } catch (Exception e) {
-                return BaseEntity.notOk(
-                        StatusCode.INTERNAL_SERVER_ERROR,
-                        "Server Error: Unexpected Error." + " Additional Message + " + e.getMessage(),
-                        "/me");
-            }
+            throw new NotFoundException("User Not Found", "/user/movie");
         }
+
+        Optional<List<MovieSession>> dbUser = restUserRepo.findMovieSessionsByUserId(id);
+
+        DTOUserMovie userMovie = new DTOUserMovie();
+
+        List<MovieSession> movies = dbUser.get();
+        List<DTOMovie2> dtoMovies = new ArrayList<>();
+
+        for(MovieSession movieSession : movies) {
+            DTOMovie2 dtoMovie2 = new DTOMovie2();
+
+            dtoMovie2.setName(movieSession.getMovie().getName());
+            dtoMovie2.setDescription(movieSession.getMovie().getDescription());
+            dtoMovie2.setStartTime(movieSession.getStartTime());
+            dtoMovie2.setMovieDuration(movieSession.getMovie().getMovieDuration());
+            dtoMovie2.setCoverPhotoUrl(movieSession.getMovie().getCoverPhotoUrl());
+
+            dtoMovies.add(dtoMovie2);
+        }
+
+        userMovie.setGotMovies(dtoMovies.size());
+        userMovie.setMovies(dtoMovies);
+
+        return BaseEntity.ok(userMovie);
     }
 
     @Override
@@ -98,9 +88,9 @@ public class RestUserServiceIMPL implements IRestUserService {
         Long id = jwtService.extractIdFromToken(token);
 
         if(id == null) {
-            return BaseEntity.notOk(StatusCode.UNAUTHORIZED, "token is invalid", "/user/update");
+            throw new UnauthorizedUserException("token is invalid", "/user/update");
         } else if(!restUserRepo.existsById(id)) {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "User Not Found", "/user/update");
+            throw  new NotFoundException("User Not Found", "/user/update");
         } else {
             restUserRepo.findById(id).ifPresent(user1 -> {
                 if (user.getPhoneNumber() != null) {
