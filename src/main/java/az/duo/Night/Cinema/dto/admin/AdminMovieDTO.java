@@ -18,7 +18,9 @@ public class AdminMovieDTO {
 
     String name;
     String description;
+
     String coverPhotoUrl;
+    String backgroundImgUrl;
 
     Long movieDuration;
     List<Genre> genre;

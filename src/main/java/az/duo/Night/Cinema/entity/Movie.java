@@ -30,6 +30,9 @@ public class Movie {
     @Column(name = "cover_photo_url")
     private String coverPhotoUrl;
 
+    @Column(name = "background_img_url")
+    String backgroundImgUrl;
+
     @Column(name = "view_count")
     private Long viewCount;
 
