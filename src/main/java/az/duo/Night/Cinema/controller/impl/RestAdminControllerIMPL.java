@@ -41,13 +41,6 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/addUser")
-    public BaseEntity<String> addUser(AdminUserDTO user) {
-        return restAdminService.addUser(user);
-    }
-
-    @Override
-    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteUser")
     public BaseEntity<String> deleteUser(Long id) {
         return restAdminService.deleteUser(id);

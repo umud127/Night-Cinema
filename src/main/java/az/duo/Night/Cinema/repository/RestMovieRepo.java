@@ -20,7 +20,7 @@ public interface RestMovieRepo extends JpaRepository<Movie, Long> {
     List<DTOMovie> findAllByNameStartingWith(@Param("prefix") String prefix);
 
     @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
-            "m.name, m.description, m.coverPhotoUrl, m.movieDuration) " +
+            "m.name, m.description, m.backgroundImgUrl, m.genres, m.releaseDate, m.movieDuration) " +
             "FROM Movie m WHERE m.starMovie = true")
     List<DTOMovie> findStarMovie();
 

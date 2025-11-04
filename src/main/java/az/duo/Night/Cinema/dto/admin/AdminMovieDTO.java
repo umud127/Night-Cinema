@@ -22,7 +22,7 @@ public class AdminMovieDTO {
     String coverPhotoUrl;
     String backgroundImgUrl;
 
-    Long movieDuration;
+    String movieDuration;
     List<Genre> genre;
 
     String director;

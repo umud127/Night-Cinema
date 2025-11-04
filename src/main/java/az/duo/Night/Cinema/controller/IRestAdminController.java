@@ -15,8 +15,6 @@ public interface IRestAdminController {
     BaseEntity<String> updateMovie(AdminMovieDTO movie);
 
 
-    BaseEntity<String> addUser(AdminUserDTO user);
-
     BaseEntity<String> deleteUser(Long id);
 
     BaseEntity<String> updateUser(AdminUserDTO user);

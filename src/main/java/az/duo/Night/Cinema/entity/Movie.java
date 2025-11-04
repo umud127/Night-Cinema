@@ -31,13 +31,13 @@ public class Movie {
     private String coverPhotoUrl;
 
     @Column(name = "background_img_url")
-    String backgroundImgUrl;
+    private String backgroundImgUrl;
 
     @Column(name = "view_count")
     private Long viewCount;
 
     @Column(name = "movie_duration")
-    private Long movieDuration;
+    private String movieDuration;
 
     @Column(name = "star_movie", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean starMovie;

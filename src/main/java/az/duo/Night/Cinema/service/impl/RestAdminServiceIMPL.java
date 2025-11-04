@@ -22,6 +22,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
                 movie.getName() == null ||
                 movie.getDescription() == null ||
                 movie.getCoverPhotoUrl() == null ||
+                movie.getBackgroundImgUrl() == null ||
 
                 movie.getMovieDuration() == null ||
                 movie.getGenre() == null ||
@@ -46,6 +47,9 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         newMovie.setMovieDuration(movie.getMovieDuration());
         newMovie.setGenres(movie.getGenre());
 
+        newMovie.setDirector(movie.getDirector());
+        newMovie.setActors(movie.getActors());
+
         newMovie.setReleaseDate(movie.getReleaseDate());
         newMovie.setTrailerUrl(movie.getTrailerUrl());
         newMovie.setStarMovie(movie.isStarMovie());
@@ -60,11 +64,6 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     public BaseEntity<String> updateMovie(AdminMovieDTO movie) {
-        return null;
-    }
-
-    @Override
-    public BaseEntity<String> addUser(AdminUserDTO user) {
         return null;
     }
 

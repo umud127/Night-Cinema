@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class RestMovieService implements IRestMovieService {
+public class RestMovieServiceIMPL implements IRestMovieService {
 
     private final RestMovieRepo restMovieRepo;
 

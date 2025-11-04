@@ -15,7 +15,7 @@ public class DTOMovie {
 
     private String description;
 
-    private String coverPhotoUrl;
+    private String backgroundImgUrl;
 
     private Long movieDuration;
 }
