@@ -22,6 +22,8 @@ public interface IRestAdminController {
 
     BaseEntity<List<User>> getUsers();
 
+    BaseEntity<String> makeAdmin(String username);
+
     BaseEntity<List<User>> getAdmins();
 
 

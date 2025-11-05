@@ -6,6 +6,7 @@ import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.Movie;
 import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.enums.RoleName;
 import az.duo.Night.Cinema.exception.BadRequestException;
 import az.duo.Night.Cinema.exception.NotFoundException;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
@@ -134,6 +135,25 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     }
 
     @Override
+    public BaseEntity<String> makeAdmin(String username) {
+        Optional<User> user = restUserRepo.findByUsername(username);
+        User updatedUser = user.get();
+
+        if (!user.isPresent()) {
+            throw new NotFoundException("User not found", "/admin/makeAdmin");
+        }
+
+        if (updatedUser.getRole().equals("ADMIN")) {
+            return BaseEntity.ok("User is already admin");
+        }
+
+        updatedUser.setRole(RoleName.ADMIN);
+        restUserRepo.save(updatedUser);
+
+        return BaseEntity.ok("User (" + username + ") was made admin successfully");
+    }
+
+    @Override
     public BaseEntity<List<User>> getAdmins() {
         List<User> admins = restUserRepo.findAllAdmins();
         return BaseEntity.ok(admins);
@@ -156,10 +176,27 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         return null;
     }
 
+    //get permision for check checking
+
     @Override
     @Transactional
     public BaseEntity<String> changePermission(ChangePermissionRequest request) {
-        return null;
+        Optional<User> user = restUserRepo.findByUsername(request.getUsername());
+        User updatedUser = user.get();
+
+        if (!user.isPresent()) {
+            throw new NotFoundException("User not found", "/admin/changePermission");
+        }
+
+        if (!updatedUser.getRole().equals("ADMIN")) {
+            updatedUser.setRole(RoleName.ADMIN);
+        }
+
+        updatedUser.setAdminPermissions(request.getPermissions());
+
+        restUserRepo.save(updatedUser);
+
+        return BaseEntity.ok("Permission was changed successfully");
     }
 
 }

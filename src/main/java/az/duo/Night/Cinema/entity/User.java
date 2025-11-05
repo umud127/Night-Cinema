@@ -1,5 +1,6 @@
 package az.duo.Night.Cinema.entity;
 
+import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.enums.RoleName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
@@ -61,13 +62,19 @@ public class User implements UserDetails {
     private int gotTickets = 0;
 
     @Column(name = "profile_photo_url" ,
-            columnDefinition = "text default 'http://res.cloudinary.com/dvusim2rf/image/upload/v1760720515/hu8eqetp1qmn4krc2mdk.webp' ",
+            columnDefinition = "text default 'https://res.cloudinary.com/dvusim2rf/image/upload/v1760720515/hu8eqetp1qmn4krc2mdk.webp' ",
             nullable = false)
     private String profilePhotoUrl;
 
     //Enums(constant variables)
     @Enumerated(EnumType.STRING)
+    @Column(name = "role")
     private RoleName role = RoleName.USER;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "admin_permissions")
+    private List<Permission> adminPermissions = null;
 
     @ManyToMany
     @JoinTable(
