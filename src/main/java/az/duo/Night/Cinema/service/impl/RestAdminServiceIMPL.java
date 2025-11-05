@@ -8,11 +8,14 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.Movie;
 import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.exception.BadRequestException;
+import az.duo.Night.Cinema.exception.NotFoundException;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
 import az.duo.Night.Cinema.service.IRestAdminService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -78,8 +81,32 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     @Transactional
-    public BaseEntity<String> updateMovie(AdminMovieDTO movie) {
-        return null;
+    public BaseEntity<String> updateMovie(Long movieId, AdminMovieDTO movie) {
+        if (!restMovieRepo.existsById(movieId)) {
+            throw new NotFoundException("Movie not found", "/admin/updateMovie");
+        }
+
+        Optional<Movie> dbMovie = restMovieRepo.findById(movieId);
+        Movie updatedMovie = dbMovie.get();
+
+        updatedMovie.setName(movie.getName());
+        updatedMovie.setDescription(movie.getDescription());
+
+        updatedMovie.setCoverPhotoUrl(movie.getCoverPhotoUrl());
+        updatedMovie.setBackgroundImgUrl(movie.getBackgroundImgUrl());
+
+        updatedMovie.setMovieDuration(movie.getMovieDuration());
+        updatedMovie.setGenres(movie.getGenre());
+
+        updatedMovie.setDirector(movie.getDirector());
+        updatedMovie.setActors(movie.getActors());
+
+        updatedMovie.setReleaseDate(movie.getReleaseDate());
+        updatedMovie.setTrailerUrl(movie.getTrailerUrl());
+
+        updatedMovie.setStarMovie(movie.isStarMovie());
+
+        return BaseEntity.ok("Movie was updated successfully");
     }
 
     @Override

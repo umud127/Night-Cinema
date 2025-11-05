@@ -12,7 +12,7 @@ public interface IRestAdminService {
 
     BaseEntity<String> deleteMovie(Long id);
 
-    BaseEntity<String> updateMovie(AdminMovieDTO movie);
+    BaseEntity<String> updateMovie(Long movieId, AdminMovieDTO movie);
 
 
 
