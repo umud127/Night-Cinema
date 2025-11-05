@@ -79,7 +79,14 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
         newMovie.setReleaseDate(movie.getReleaseDate());
         newMovie.setTrailerUrl(movie.getTrailerUrl());
-        newMovie.setStarMovie(movie.isStarMovie());
+
+        if (movie.isStarMovie()) {
+            newMovie.setStarMovie(true);
+            newMovie.setBackgroundImgUrl(movie.getBackgroundImgUrl());
+        } else {
+            newMovie.setStarMovie(false);
+            newMovie.setBackgroundImgUrl(null);
+        }
 
         restMovieRepo.save(newMovie);
         return BaseEntity.ok("Movie was added successfully");
