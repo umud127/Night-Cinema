@@ -29,25 +29,40 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     @Override
     @Transactional
     public BaseEntity<String> addMovie(AdminMovieDTO movie) {
-        if(
-                movie.getName() == null ||
-                movie.getDescription() == null ||
+        if (movie.getName() == null) {
+            throw new BadRequestException("Movie name is empty", "/admin/addMovie");
+        }
+        if (movie.getDescription() == null) {
+            throw new BadRequestException("Movie description is empty", "/admin/addMovie");
+        }
 
-                movie.getCoverPhotoUrl() == null ||
-                movie.getBackgroundImgUrl() == null ||
+        if (movie.getCoverPhotoUrl() == null) {
+            throw new BadRequestException("Movie cover photo url is empty", "/admin/addMovie");
+        }
+        if (movie.getBackgroundImgUrl() == null) {
+            throw new BadRequestException("Movie background image url is empty", "/admin/addMovie");
+        }
 
-                movie.getMovieDuration() == null ||
-                movie.getGenre() == null ||
+        if (movie.getMovieDuration() == null) {
+            throw new BadRequestException("Movie duration is empty", "/admin/addMovie");
+        }
+        if (movie.getGenre() == null) {
+            throw new BadRequestException("Movie genre is empty", "/admin/addMovie");
+        }
 
-                movie.getDirector() == null ||
-                movie.getActors() == null ||
+        if (movie.getDirector() == null) {
+            throw new BadRequestException("Movie director is empty", "/admin/addMovie");
+        }
+        if (movie.getActors() == null) {
+            throw new BadRequestException("Movie actors is empty", "/admin/addMovie");
+        }
 
-                movie.getReleaseDate() == null ||
-                movie.getTrailerUrl() == null ||
+        if (movie.getReleaseDate() == null) {
+            throw new BadRequestException("Movie release date is empty", "/admin/addMovie");
+        }
 
-                movie.isStarMovie()
-        ) {
-            throw new BadRequestException("Some of the fields are empty", "/admin/addMovie");
+        if (movie.getTrailerUrl() == null) {
+            throw new BadRequestException("Movie trailer url is empty", "/admin/addMovie");
         }
 
         Movie newMovie = new Movie();
