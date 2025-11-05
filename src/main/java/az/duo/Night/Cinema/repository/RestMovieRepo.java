@@ -13,8 +13,8 @@ import java.util.List;
 @Repository
 public interface RestMovieRepo extends JpaRepository<Movie, Long> {
 
-    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
-            "m.name, m.description, m.coverPhotoUrl, m.movieDuration) " +
+    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie3(" +
+            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration) " +
             "FROM Movie m " +
             "WHERE LOWER(m.name) LIKE :prefix")
     List<DTOMovie> findAllByNameStartingWith(@Param("prefix") String prefix);
@@ -24,8 +24,8 @@ public interface RestMovieRepo extends JpaRepository<Movie, Long> {
             "FROM Movie m WHERE m.starMovie = true")
     List<DTOMovie> findStarMovie();
 
-    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
-            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration,) " +
+    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie3(" +
+            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration) " +
             "FROM Movie m")
     List<DTOMovie> findAllMovies();
 }
