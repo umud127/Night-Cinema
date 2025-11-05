@@ -7,13 +7,18 @@ import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.Movie;
 import az.duo.Night.Cinema.enums.StatusCode;
-import az.duo.Night.Cinema.exception.DataInsertException;
+import az.duo.Night.Cinema.exception.BadRequestException;
+import az.duo.Night.Cinema.repository.RestMovieRepo;
 import az.duo.Night.Cinema.service.IRestAdminService;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class RestAdminServiceIMPL implements IRestAdminService {
+
+    private final RestMovieRepo restMovieRepo;
 
     @Override
     @Transactional
@@ -35,7 +40,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
                 movie.isStarMovie()
         ) {
-            return BaseEntity.notOk(StatusCode.BAD_REQUEST, "Some of the fields are empty", null);
+            throw new BadRequestException("Some of the fields are empty", "/admin/addMovie");
         }
 
         Movie newMovie = new Movie();
@@ -59,10 +64,20 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     public BaseEntity<String> deleteMovie(Long id) {
-        return null;
+        if (id == null) {
+            throw new BadRequestException("Movie id is empty", "/admin/deleteMovie");
+        }
+
+        if (!restMovieRepo.existsById(id)) {
+            throw new BadRequestException("Movie not found", "/admin/deleteMovie");
+        }
+
+        restMovieRepo.deleteById(id);
+        return BaseEntity.ok("Movie was deleted successfully");
     }
 
     @Override
+    @Transactional
     public BaseEntity<String> updateMovie(AdminMovieDTO movie) {
         return null;
     }
@@ -73,6 +88,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     }
 
     @Override
+    @Transactional
     public BaseEntity<String> updateUser(AdminUserDTO user) {
         return null;
     }
@@ -88,6 +104,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     }
 
     @Override
+    @Transactional
     public BaseEntity<String> addSession(AdminMovieSessionDTO session) {
         return null;
     }
@@ -98,11 +115,13 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     }
 
     @Override
+    @Transactional
     public BaseEntity<String> updateSession(AdminMovieSessionDTO session) {
         return null;
     }
 
     @Override
+    @Transactional
     public BaseEntity<String> changePermission(ChangePermissionRequest request) {
         return null;
     }
