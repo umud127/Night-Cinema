@@ -2,19 +2,20 @@ package az.duo.Night.Cinema.service.impl;
 
 import az.duo.Night.Cinema.dto.admin.AdminMovieDTO;
 import az.duo.Night.Cinema.dto.admin.AdminMovieSessionDTO;
-import az.duo.Night.Cinema.dto.admin.AdminUserDTO;
 import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.Movie;
-import az.duo.Night.Cinema.enums.StatusCode;
+import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.exception.BadRequestException;
 import az.duo.Night.Cinema.exception.NotFoundException;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
+import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestAdminService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +23,7 @@ import java.util.Optional;
 public class RestAdminServiceIMPL implements IRestAdminService {
 
     private final RestMovieRepo restMovieRepo;
+    private final RestUserRepo restUserRepo;
 
     @Override
     @Transactional
@@ -29,6 +31,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         if(
                 movie.getName() == null ||
                 movie.getDescription() == null ||
+
                 movie.getCoverPhotoUrl() == null ||
                 movie.getBackgroundImgUrl() == null ||
 
@@ -111,22 +114,27 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     public BaseEntity<String> deleteUser(Long id) {
+        if (id == null) {
+            throw new BadRequestException("User id is empty", "/admin/deleteUser");
+        }
+
+        if (!restUserRepo.existsById(id)) {
+            throw new NotFoundException("User not found", "/admin/deleteUser");
+        }
+
+        restUserRepo.deleteById(id);
+
+        return BaseEntity.ok("User was deleted successfully");
+    }
+
+    @Override
+    public BaseEntity<List<User>> getUsers() {
+        List<User> users = restUserRepo.findAll();
         return null;
     }
 
     @Override
-    @Transactional
-    public BaseEntity<String> updateUser(AdminUserDTO user) {
-        return null;
-    }
-
-    @Override
-    public BaseEntity<String> getUsers() {
-        return null;
-    }
-
-    @Override
-    public BaseEntity<String> getAdmins() {
+    public BaseEntity<List<User>> getAdmins() {
         return null;
     }
 

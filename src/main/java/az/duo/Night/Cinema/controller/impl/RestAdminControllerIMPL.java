@@ -3,13 +3,15 @@ package az.duo.Night.Cinema.controller.impl;
 import az.duo.Night.Cinema.controller.IRestAdminController;
 import az.duo.Night.Cinema.dto.admin.AdminMovieDTO;
 import az.duo.Night.Cinema.dto.admin.AdminMovieSessionDTO;
-import az.duo.Night.Cinema.dto.admin.AdminUserDTO;
 import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
+import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.service.IRestAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping( "/api/admin")
@@ -48,22 +50,15 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/updateUser")
-    public BaseEntity<String> updateUser(AdminUserDTO user) {
-        return restAdminService.updateUser(user);
-    }
-
-    @Override
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getUsers")
-    public BaseEntity<String> getUsers() {
+    public BaseEntity<List<User>> getUsers() {
         return restAdminService.getUsers();
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getAdmins")
-    public BaseEntity<String> getAdmins() {
+    public BaseEntity<List<User>> getAdmins() {
         return restAdminService.getAdmins();
     }
 

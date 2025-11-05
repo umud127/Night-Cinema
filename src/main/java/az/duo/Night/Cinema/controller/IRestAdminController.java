@@ -2,9 +2,11 @@ package az.duo.Night.Cinema.controller;
 
 import az.duo.Night.Cinema.dto.admin.AdminMovieDTO;
 import az.duo.Night.Cinema.dto.admin.AdminMovieSessionDTO;
-import az.duo.Night.Cinema.dto.admin.AdminUserDTO;
 import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
+import az.duo.Night.Cinema.entity.User;
+
+import java.util.List;
 
 public interface IRestAdminController {
 
@@ -17,12 +19,10 @@ public interface IRestAdminController {
 
     BaseEntity<String> deleteUser(Long id);
 
-    BaseEntity<String> updateUser(AdminUserDTO user);
 
+    BaseEntity<List<User>> getUsers();
 
-    BaseEntity<String> getUsers();
-
-    BaseEntity<String> getAdmins();
+    BaseEntity<List<User>> getAdmins();
 
 
     BaseEntity<String> addSession(AdminMovieSessionDTO session);
