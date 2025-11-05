@@ -14,19 +14,58 @@ import java.util.List;
 @Repository
 public interface RestMovieRepo extends JpaRepository<Movie, Long> {
 
-    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie3(" +
-            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration) " +
-            "FROM Movie m " +
-            "WHERE LOWER(m.name) LIKE :prefix")
+//    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie3(" +
+//            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration) " +
+//            "FROM Movie m " +
+//            "WHERE LOWER(m.name) LIKE LOWER(CONCAT(:prefix, '%'))")
+//    List<DTOMovie3> findAllByNameStartingWith(@Param("prefix") String prefix);
+//
+//    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
+//            "m.name, m.description, m.backgroundImgUrl, m.genres, m.releaseDate, m.movieDuration) " +
+//            "FROM Movie m WHERE m.starMovie = true")
+//    List<DTOMovie> findStarMovie();
+//
+//    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie3(" +
+//            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration) " +
+//            "FROM Movie m")
+//    List<DTOMovie3> findAllMovies();
+
+    @Query(value = """
+SELECT 
+    m.name,
+    m.description,
+    m.cover_photo_url AS coverPhotoUrl,
+    m.genres,
+    m.release_date AS releaseDate,
+    m.movie_duration AS movieDuration
+FROM cinema_movie m
+WHERE LOWER(m.name) LIKE LOWER(CONCAT(:prefix, '%'))
+""", nativeQuery = true)
     List<DTOMovie3> findAllByNameStartingWith(@Param("prefix") String prefix);
 
-    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
-            "m.name, m.description, m.backgroundImgUrl, m.genres, m.releaseDate, m.movieDuration) " +
-            "FROM Movie m WHERE m.starMovie = true")
+    @Query(value = """
+SELECT 
+    m.name,
+    m.description,
+    m.background_img_url AS backgroundImgUrl,
+    m.genres,
+    m.release_date AS releaseDate,
+    m.movie_duration AS movieDuration
+FROM cinema_movie m
+WHERE m.star_movie = true
+""", nativeQuery = true)
     List<DTOMovie> findStarMovie();
 
-    @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie3(" +
-            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration) " +
-            "FROM Movie m")
+    @Query(value = """
+SELECT 
+    m.name,
+    m.description,
+    m.cover_photo_url AS coverPhotoUrl,
+    m.genres,
+    m.release_date AS releaseDate,
+    m.movie_duration AS movieDuration
+FROM cinema_movie m
+""", nativeQuery = true)
     List<DTOMovie3> findAllMovies();
+
 }

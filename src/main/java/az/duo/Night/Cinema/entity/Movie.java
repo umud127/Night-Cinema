@@ -50,6 +50,7 @@ public class Movie {
     @Column(name = "director")
     private String director;
 
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "actor")
     private List<String> actors = new ArrayList<>();
 

@@ -1,15 +1,27 @@
 package az.duo.Night.Cinema.dto.movie;
 
 import az.duo.Night.Cinema.enums.Genre;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
 public class DTOMovie {
+
+    public DTOMovie(String name, String description,
+                    String backgroundImgUrl,
+                    List<Genre> genres,
+                    LocalDate releaseDate,
+                    String movieDuration) {
+        this.name = name;
+        this.description = description;
+        this.backgroundImgUrl = backgroundImgUrl;
+        this.genres = genres;
+        this.releaseDate = releaseDate;
+        this.movieDuration = movieDuration;
+    }
+
 
     private String name;
 
