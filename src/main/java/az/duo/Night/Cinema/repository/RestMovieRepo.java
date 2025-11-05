@@ -25,7 +25,7 @@ public interface RestMovieRepo extends JpaRepository<Movie, Long> {
     List<DTOMovie> findStarMovie();
 
     @Query("SELECT new az.duo.Night.Cinema.dto.movie.DTOMovie(" +
-            "m.name, m.description, m.coverPhotoUrl, m.movieDuration) " +
+            "m.name, m.description, m.coverPhotoUrl, m.genres, m.releaseDate, m.movieDuration,) " +
             "FROM Movie m")
     List<DTOMovie> findAllMovies();
 }
