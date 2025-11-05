@@ -1,6 +1,7 @@
 package az.duo.Night.Cinema.service.impl;
 
 import az.duo.Night.Cinema.dto.movie.DTOMovie;
+import az.duo.Night.Cinema.dto.movie.DTOMovie3;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
@@ -36,9 +37,9 @@ public class RestMovieServiceIMPL implements IRestMovieService {
     }
 
     @Override
-    public BaseEntity<List<DTOMovie>> getAllMovies() {
+    public BaseEntity<List<DTOMovie3>> getAllMovies() {
         try {
-            List<DTOMovie> dbMovies = restMovieRepo.findAllMovies();
+            List<DTOMovie3> dbMovies = restMovieRepo.findAllMovies();
 
             if(dbMovies != null && !dbMovies.isEmpty()) {
                 return BaseEntity.ok(dbMovies);
@@ -53,12 +54,12 @@ public class RestMovieServiceIMPL implements IRestMovieService {
     }
 
     @Override
-    public BaseEntity<List<DTOMovie>> getMoviesByName(String movieName) {
+    public BaseEntity<List<DTOMovie3>> getMoviesByName(String movieName) {
         try {
             // Parametrə % əlavə edirik ki, LIKE işləsin
             String searchPattern = movieName.toLowerCase() + "%";
 
-            List<DTOMovie> dbMovies = restMovieRepo.findAllByNameStartingWith(searchPattern);
+            List<DTOMovie3> dbMovies = restMovieRepo.findAllByNameStartingWith(searchPattern);
 
             if(dbMovies != null && !dbMovies.isEmpty()) {
                 return BaseEntity.ok(dbMovies);
