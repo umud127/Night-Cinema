@@ -7,6 +7,7 @@ import az.duo.Night.Cinema.dto.user.DTOUserMovie;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.MovieSession;
 import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.enums.RoleName;
 import az.duo.Night.Cinema.exception.NotFoundException;
 import az.duo.Night.Cinema.exception.UnauthorizedUserException;
 import az.duo.Night.Cinema.jwt.JWTService;
@@ -25,6 +26,27 @@ public class RestUserServiceIMPL implements IRestUserService {
 
     private final RestUserRepo restUserRepo;
     private final JWTService jwtService;
+
+    @Override
+    public BaseEntity<RoleName> checkUserRole(String token) {
+        if (token == null) {
+            throw new UnauthorizedUserException("token is invalid", "/user/me");
+        }
+
+        String username = jwtService.extractUsername(token);
+
+        if (username == null) {
+            throw new UnauthorizedUserException("token is invalid", "/user/me");
+        }
+
+        if(!restUserRepo.existsByUsername(username)) {
+            throw new NotFoundException("User Not Found", "/user/me");
+        }
+
+        RoleName role = restUserRepo.getRoleByUsername(username);
+
+        return BaseEntity.ok(role);
+    }
 
     public BaseEntity<DTOUserInfo> getUserInfo(String token) {
         Long id = jwtService.extractIdFromToken(token);

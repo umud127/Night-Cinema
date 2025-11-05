@@ -2,6 +2,7 @@ package az.duo.Night.Cinema.repository;
 
 import az.duo.Night.Cinema.entity.MovieSession;
 import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.enums.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,8 @@ import java.util.Optional;
 
 @Repository
 public interface RestUserRepo extends JpaRepository<User, Long> {
+
+    RoleName getRoleByUsername(String username);
 
     Optional<User> findByEmail(String email);
 

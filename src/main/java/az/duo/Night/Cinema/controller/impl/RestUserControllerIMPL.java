@@ -5,6 +5,7 @@ import az.duo.Night.Cinema.dto.user.DTOUserIU;
 import az.duo.Night.Cinema.dto.user.DTOUserInfo;
 import az.duo.Night.Cinema.dto.user.DTOUserMovie;
 import az.duo.Night.Cinema.entity.BaseEntity;
+import az.duo.Night.Cinema.enums.RoleName;
 import az.duo.Night.Cinema.service.IRestUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class RestUserControllerIMPL implements IRestUserController {
 
     private final IRestUserService restUserService;
+
+    @GetMapping(path = "/check")
+    @Override
+    public BaseEntity<RoleName> checkUserRole(String token) {
+        return restUserService.checkUserRole(token);
+    }
 
     @GetMapping(path = "/info")
     @Override
