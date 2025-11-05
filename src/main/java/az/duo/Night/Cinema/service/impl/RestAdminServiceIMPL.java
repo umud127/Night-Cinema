@@ -130,12 +130,13 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     @Override
     public BaseEntity<List<User>> getUsers() {
         List<User> users = restUserRepo.findAll();
-        return null;
+        return BaseEntity.ok(users);
     }
 
     @Override
     public BaseEntity<List<User>> getAdmins() {
-        return null;
+        List<User> admins = restUserRepo.findAllAdmins();
+        return BaseEntity.ok(admins);
     }
 
     @Override

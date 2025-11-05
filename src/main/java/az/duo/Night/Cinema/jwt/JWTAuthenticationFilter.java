@@ -36,6 +36,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         logger.info("Request path: {}", requestPath);
         logger.info("Authorization header: {}", header);
+
         if (requestPath.startsWith("/api/auth/register") ||
                 requestPath.startsWith("/api/auth/authentication") ||
                 requestPath.startsWith("/v3/api-docs") ||
@@ -74,7 +75,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         } catch (ExpiredJwtException e) {
             logger.warn("JWT expired: {}", e.getMessage());
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT expired");
-            return; // vacib!
+            return;
         } catch (Exception e) {
             logger.error(e.getMessage());
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT invalid");

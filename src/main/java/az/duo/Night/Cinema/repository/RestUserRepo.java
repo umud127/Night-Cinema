@@ -23,4 +23,7 @@ public interface RestUserRepo extends JpaRepository<User, Long> {
     Optional<List<MovieSession>> findMovieSessionsByUserId(@Param("userId") Long userId);
 
     Optional<User> findByUsername(String username);
+
+    @Query("SELECT u FROM User u WHERE u.role = az.duo.Night.Cinema.enums.RoleName.ADMIN")
+    List<User> findAllAdmins();
 }
