@@ -23,7 +23,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addMovie")
-    public BaseEntity<String> addMovie(AdminMovieDTO movie) {
+    public BaseEntity<String> addMovie(@RequestBody AdminMovieDTO movie) {
         return restAdminService.addMovie(movie);
     }
 
