@@ -17,7 +17,7 @@ public class DTOMovie2 {
 
     private String coverPhotoUrl;
 
-    private Long movieDuration;
+    private String movieDuration;
 
     private LocalDateTime startTime;
 }
