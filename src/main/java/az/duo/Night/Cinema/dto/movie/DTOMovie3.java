@@ -19,5 +19,5 @@ public class DTOMovie3 {
     private String coverPhotoUrl;
     private List<Genre> genres;
     private LocalDate releaseDate;
-    private Long movieDuration;
+    private String movieDuration;
 }

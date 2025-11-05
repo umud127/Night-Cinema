@@ -42,6 +42,8 @@ public class Movie {
     @Column(name = "star_movie", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean starMovie;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
     @Column(name = "genre")
     private List<Genre> genres = new ArrayList<>();
 

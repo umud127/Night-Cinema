@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DTOMovie {
+
+
 
     private String name;
 
@@ -24,5 +25,5 @@ public class DTOMovie {
 
     private LocalDate releaseDate;
 
-    private Long movieDuration;
+    private String movieDuration;
 }
