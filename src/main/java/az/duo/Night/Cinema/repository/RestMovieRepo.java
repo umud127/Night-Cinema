@@ -45,7 +45,7 @@ SELECT
     m.name,
     m.description,
     m.cover_photo_url AS coverPhotoUrl,
-    GROUP_CONCAT(distinct g.genre) AS genresString,
+    STRING_AGG(DISTINCT g.genre, ',') AS genresString,
     m.release_date AS releaseDate,
     m.movie_duration AS movieDuration
 FROM cinema_movie m
