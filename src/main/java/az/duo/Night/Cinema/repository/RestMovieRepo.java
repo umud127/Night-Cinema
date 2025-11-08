@@ -41,16 +41,19 @@ WHERE m.star_movie = true
     List<DTOMovie> findStarMovie();
 
     @Query(value = """
-SELECT 
+SELECT
     m.name,
     m.description,
-    m.cover_photo_url AS coverPhotoUrl,
-    STRING_AGG(DISTINCT g.genre, ',') AS genresString,
-    m.release_date AS releaseDate,
-    m.movie_duration AS movieDuration
+    m.cover_photo_url AS "coverPhotoUrl",
+    string_agg(DISTINCT g.genre, ',') AS "genresString",
+    m.release_date AS "releaseDate",
+    m.movie_duration AS "movieDuration",
+    string_agg(DISTINCT ma.actor, ',') AS "actorsString",
+    m.director
 FROM cinema_movie m
 LEFT JOIN movie_genres g ON m.id = g.movie_id
-GROUP BY m.id
+LEFT JOIN movie_actors ma ON m.id = ma.movie_id
+GROUP BY m.id;
 """, nativeQuery = true)
     List<DTOMovie3> findAllMovies();
 }

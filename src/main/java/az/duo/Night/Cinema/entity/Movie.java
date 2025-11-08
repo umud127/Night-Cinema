@@ -1,7 +1,6 @@
 package az.duo.Night.Cinema.entity;
 
 import az.duo.Night.Cinema.enums.Genre;
-import az.duo.Night.Cinema.util.GenreListConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -43,15 +42,16 @@ public class Movie {
     @Column(name = "star_movie", columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean starMovie;
 
-    @Convert(converter = GenreListConverter.class)
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
+    @Column(name = "genre")
     private List<Genre> genres = new ArrayList<>();
 
     @Column(name = "director")
     private String director;
 
     @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "actor")
     private List<String> actors = new ArrayList<>();
 
     @Column(name = "release_date")

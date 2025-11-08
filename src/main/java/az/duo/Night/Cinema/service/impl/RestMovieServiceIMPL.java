@@ -6,13 +6,11 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.enums.StatusCode;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
 import az.duo.Night.Cinema.service.IRestMovieService;
-import az.duo.Night.Cinema.util.GenreListConverter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -20,7 +18,6 @@ import java.util.stream.Collectors;
 public class RestMovieServiceIMPL implements IRestMovieService {
 
     private final RestMovieRepo restMovieRepo;
-    private final GenreListConverter genreListConverter;
 
     @Override
     public BaseEntity<List<DTOMovie>> getStarMovie() {
@@ -44,18 +41,7 @@ public class RestMovieServiceIMPL implements IRestMovieService {
             List<DTOMovie3> dbMovies = restMovieRepo.findAllMovies();
 
             if(dbMovies != null && !dbMovies.isEmpty()) {
-                return BaseEntity.ok(dbMovies.stream()
-                        .map(m -> new DTOMovie3(
-                                m.getName(),
-                                m.getDescription(),
-                                m.getCoverPhotoUrl(),
-                                genreListConverter.convertToEntityAttribute(m.getGenreString()),
-                                m.getReleaseDate(),
-                                m.getMovieDuration(),
-                                m.getActors(),
-                                m.getDirector()
-                        ))
-                        .collect(Collectors.toList()));
+                return BaseEntity.ok(dbMovies);
             }
 
             return BaseEntity.notOk(StatusCode.NOT_FOUND, "No Movies Found", "/movie/all");
