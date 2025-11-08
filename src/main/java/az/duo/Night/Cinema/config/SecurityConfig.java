@@ -66,6 +66,7 @@ public class SecurityConfig {
                                         .requestMatchers(MOVIE_SEARCH).permitAll()
 
                                         .requestMatchers(USER).hasRole("USER")
+                                        .requestMatchers(USER).hasRole("ADMIN")
                                         .requestMatchers(ADMIN).hasRole("ADMIN")
 
                                         .anyRequest()
