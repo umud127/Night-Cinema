@@ -43,8 +43,8 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/deleteUser")
-    public BaseEntity<String> deleteUser(Long id) {
+    @DeleteMapping("/deleteUser/{id}")
+    public BaseEntity<String> deleteUser(@PathVariable Long id) {
         return restAdminService.deleteUser(id);
     }
 
