@@ -29,8 +29,8 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @DeleteMapping("/deleteMovie")
-    public BaseEntity<String> deleteMovie(Long id) {
+    @DeleteMapping("/deleteMovie/{id}")
+    public BaseEntity<String> deleteMovie(@PathVariable Long id) {
         return restAdminService.deleteMovie(id);
     }
 
