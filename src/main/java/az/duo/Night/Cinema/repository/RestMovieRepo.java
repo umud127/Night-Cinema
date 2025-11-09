@@ -42,6 +42,7 @@ WHERE m.star_movie = true
 
     @Query(value = """
 SELECT
+    m.id,
     m.name,
     m.description,
     m.cover_photo_url AS "coverPhotoUrl",

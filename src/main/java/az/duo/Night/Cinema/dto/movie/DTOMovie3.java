@@ -13,7 +13,8 @@ import java.util.stream.Collectors;
 public class DTOMovie3 {
 
 
-    public DTOMovie3(String name,
+    public DTOMovie3(Long id,
+                     String name,
                      String description,
                      String coverPhotoUrl,
                      String genreString,
@@ -21,6 +22,7 @@ public class DTOMovie3 {
                      String movieDuration,
                      String actorsString,
                      String director) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.coverPhotoUrl = coverPhotoUrl;
@@ -31,6 +33,7 @@ public class DTOMovie3 {
         this.movieDuration = movieDuration;
     }
 
+    private Long id;
     private String name;
     private String description;
     private String coverPhotoUrl;
