@@ -21,7 +21,10 @@ public class DTOMovie3 {
                      Date releaseDate,
                      String movieDuration,
                      String actorsString,
-                     String director) {
+                     String director,
+                     boolean starMovie,
+                     String trailerUrl,
+                     String backgroundImgUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -31,6 +34,9 @@ public class DTOMovie3 {
         this.director = director;
         this.releaseDate = releaseDate.toLocalDate();
         this.movieDuration = movieDuration;
+        this.starMovie = starMovie;
+        this.trailerUrl = trailerUrl;
+        this.backgroundImgUrl = backgroundImgUrl;
     }
 
     private Long id;
@@ -47,6 +53,10 @@ public class DTOMovie3 {
     private Long viewCount;
     private LocalDate releaseDate;
     private String movieDuration;
+
+    private boolean starMovie;
+    private String trailerUrl;
+    private String backgroundImgUrl;
 
     // String → List<Genre>
     public List<Genre> getGenres() {

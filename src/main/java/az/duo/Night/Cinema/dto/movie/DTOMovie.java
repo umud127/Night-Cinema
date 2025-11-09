@@ -9,7 +9,8 @@ import java.util.List;
 @Data
 public class DTOMovie {
 
-    public DTOMovie(String name, String description,
+    public DTOMovie(String name,
+                    String description,
                     String backgroundImgUrl,
                     List<Genre> genres,
                     LocalDate releaseDate,

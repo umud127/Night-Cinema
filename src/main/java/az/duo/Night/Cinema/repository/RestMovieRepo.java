@@ -50,7 +50,10 @@ SELECT
     m.release_date AS "releaseDate",
     m.movie_duration AS "movieDuration",
     string_agg(DISTINCT ma.actor, ',') AS "actorsString",
-    m.director
+    m.director,
+    m.star_movie AS starMovie,
+    m.trailer_url AS trailerUrl,
+    m.background_img_url AS bacgroundImgUrl
 FROM cinema_movie m
 LEFT JOIN movie_genres g ON m.id = g.movie_id
 LEFT JOIN movie_actors ma ON m.id = ma.movie_id
