@@ -33,8 +33,8 @@ public class Movie {
     @Column(name = "background_img_url")
     private String backgroundImgUrl;
 
-    @Column(name = "view_count",columnDefinition = "BIGINT default 0")
-    private Long viewCount;
+    @Column(name = "view_count")
+    private Long viewCount = 0L;
 
     @Column(name = "movie_duration")
     private String movieDuration;
