@@ -37,7 +37,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateMovie")
-    public BaseEntity<String> updateMovie(Long movieId, AdminMovieDTO movie) {
+    public BaseEntity<String> updateMovie(Long movieId, @RequestBody AdminMovieDTO movie) {
         return restAdminService.updateMovie(movieId, movie);
     }
 
