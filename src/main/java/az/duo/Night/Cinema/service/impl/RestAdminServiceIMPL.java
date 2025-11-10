@@ -133,6 +133,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
         updatedMovie.setStarMovie(movie.isStarMovie());
 
+        restMovieRepo.save(updatedMovie);
         return BaseEntity.ok("Movie was updated successfully");
     }
 
