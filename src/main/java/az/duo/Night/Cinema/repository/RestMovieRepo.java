@@ -55,7 +55,7 @@ SELECT
     m.director,
     m.star_movie AS starMovie,
     m.trailer_url AS trailerUrl,
-    m.background_img_url AS bacgroundImgUrl
+    m.background_img_url AS backgroundImgUrl
 FROM cinema_movie m
 LEFT JOIN movie_genres g ON m.id = g.movie_id
 LEFT JOIN movie_actors ma ON m.id = ma.movie_id
