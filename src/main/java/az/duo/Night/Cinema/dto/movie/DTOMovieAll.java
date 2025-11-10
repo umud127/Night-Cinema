@@ -10,21 +10,21 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Data
-public class DTOMovie3 {
+public class DTOMovieAll {
 
 
-    public DTOMovie3(Long id,
-                     String name,
-                     String description,
-                     String coverPhotoUrl,
-                     String genreString,
-                     Date releaseDate,
-                     String movieDuration,
-                     String actorsString,
-                     String director,
-                     boolean starMovie,
-                     String trailerUrl,
-                     String backgroundImgUrl) {
+    public DTOMovieAll(Long id,
+                       String name,
+                       String description,
+                       String coverPhotoUrl,
+                       String genreString,
+                       Date releaseDate,
+                       String movieDuration,
+                       String actorsString,
+                       String director,
+                       boolean starMovie,
+                       String trailerUrl,
+                       String backgroundImgUrl) {
         this.id = id;
         this.name = name;
         this.description = description;

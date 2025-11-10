@@ -7,14 +7,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-public class DTOMovie {
+public class DTOStarMovie {
 
-    public DTOMovie(String name,
-                    String description,
-                    String backgroundImgUrl,
-                    List<Genre> genres,
-                    LocalDate releaseDate,
-                    String movieDuration) {
+    public DTOStarMovie(String name,
+                        String description,
+                        String backgroundImgUrl,
+                        List<Genre> genres,
+                        LocalDate releaseDate,
+                        String movieDuration) {
         this.name = name;
         this.description = description;
         this.backgroundImgUrl = backgroundImgUrl;
