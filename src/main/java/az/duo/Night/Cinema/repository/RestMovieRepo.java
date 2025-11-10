@@ -32,7 +32,7 @@ SELECT
     m.name,
     m.description,
     m.background_img_url AS backgroundImgUrl,
-    string_agg(DISTINCT g.genre, ',') AS "genresString",
+    string_agg(DISTINCT g.genre, ',') AS "genreString",
     m.release_date AS releaseDate,
     m.movie_duration AS movieDuration
 FROM cinema_movie m
@@ -48,7 +48,7 @@ SELECT
     m.name,
     m.description,
     m.cover_photo_url AS "coverPhotoUrl",
-    string_agg(DISTINCT g.genre, ',') AS "genresString",
+    string_agg(DISTINCT g.genre, ',') AS "genreString",
     m.release_date AS "releaseDate",
     m.movie_duration AS "movieDuration",
     string_agg(DISTINCT ma.actor, ',') AS "actorsString",
