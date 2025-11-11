@@ -1,11 +1,8 @@
 package az.duo.Night.Cinema.dto.movie;
 
-import az.duo.Night.Cinema.enums.Genre;
 import lombok.Data;
 
 import java.sql.Date;
-import java.time.LocalDate;
-import java.util.List;
 
 @Data
 public class DTOStarMovie {

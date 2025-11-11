@@ -15,15 +15,24 @@ import java.util.List;
 public interface RestMovieRepo extends JpaRepository<Movie, Long> {
 
     @Query(value = """
-SELECT 
+SELECT
+    m.id,
     m.name,
     m.description,
-    m.cover_photo_url AS coverPhotoUrl,
-    m.genres,
-    m.release_date AS releaseDate,
-    m.movie_duration AS movieDuration
+    m.cover_photo_url AS "coverPhotoUrl",
+    string_agg(DISTINCT g.genre, ',') AS "genreString",
+    m.release_date AS "releaseDate",
+    m.movie_duration AS "movieDuration",
+    string_agg(DISTINCT ma.actor, ',') AS "actorsString",
+    m.director,
+    m.star_movie AS starMovie,
+    m.trailer_url AS trailerUrl,
+    m.background_img_url AS backgroundImgUrl
 FROM cinema_movie m
+LEFT JOIN movie_genres g ON m.id = g.movie_id
+LEFT JOIN movie_actors ma ON m.id = ma.movie_id
 WHERE LOWER(m.name) LIKE LOWER(CONCAT(:prefix, '%'))
+GROUP BY m.id;
 """, nativeQuery = true)
     List<DTOMovieAll> findAllByNameStartingWith(@Param("prefix") String prefix);
 
