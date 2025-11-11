@@ -12,13 +12,13 @@ public class DTOStarMovie {
     public DTOStarMovie(String name,
                         String description,
                         String backgroundImgUrl,
-                        String genres,
+                        String genreString,
                         LocalDate releaseDate,
                         String movieDuration) {
         this.name = name;
         this.description = description;
         this.backgroundImgUrl = backgroundImgUrl;
-        this.genres = genres;
+        this.genreString = genreString;
         this.releaseDate = releaseDate;
         this.movieDuration = movieDuration;
     }
@@ -30,7 +30,7 @@ public class DTOStarMovie {
 
     private String backgroundImgUrl;
 
-    private String genres;
+    private String genreString;
 
     private LocalDate releaseDate;
 
