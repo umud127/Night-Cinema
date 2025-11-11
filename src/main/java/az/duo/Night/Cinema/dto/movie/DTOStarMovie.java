@@ -3,6 +3,7 @@ package az.duo.Night.Cinema.dto.movie;
 import az.duo.Night.Cinema.enums.Genre;
 import lombok.Data;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class DTOStarMovie {
                         String description,
                         String backgroundImgUrl,
                         String genreString,
-                        LocalDate releaseDate,
+                        Date releaseDate,
                         String movieDuration) {
         this.name = name;
         this.description = description;
@@ -32,7 +33,7 @@ public class DTOStarMovie {
 
     private String genreString;
 
-    private LocalDate releaseDate;
+    private Date releaseDate;
 
     private String movieDuration;
 }
