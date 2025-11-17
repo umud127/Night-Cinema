@@ -40,7 +40,7 @@ public class RestUserServiceIMPL implements IRestUserService {
         }
 
         if(!restUserRepo.existsByUsername(username)) {
-            throw new NotFoundException("User Not Found", "/user/check");
+            throw new NotFoundException("User Not Found with username: " + username, "/user/check");
         }
 
         RoleName role = restUserRepo.getRoleByUsername(username);
