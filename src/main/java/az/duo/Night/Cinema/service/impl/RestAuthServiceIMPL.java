@@ -48,7 +48,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
         newUser.setEmail(request.getEmail());
         newUser.setPassword(bCryptPasswordEncoder.encode(request.getPassword()));
 
-        newUser.setPhoneNumber(request.getPhoneNumber());
+        newUser.setPhoneE164(request.getPhoneNumber());
         newUser.setPhoneE164(request.getPhoneNumber());
 
         newUser.setUsername(request.getUsername());
