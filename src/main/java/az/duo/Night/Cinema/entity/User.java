@@ -45,10 +45,6 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Pattern(regexp = "^\\+?[1-9]\\d{7,14}$", message = "Field must contain only digits")
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Size(min = 8, max = 16)
     @Pattern(regexp = "^\\+?[1-9]\\d{7,14}$",
             message = "Phone number must be in E.164 format (e.g., +994501234567)")
