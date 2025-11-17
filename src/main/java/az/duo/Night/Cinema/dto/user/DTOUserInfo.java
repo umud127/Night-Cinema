@@ -12,4 +12,12 @@ public class DTOUserInfo {
     private String phoneNumber;
     private Date createdAt;
     private String profilePhotoUrl;
+
+    public DTOUserInfo(String username, String phoneNumber, String profilePhotoUrl, String email, Date createdAt) {
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.profilePhotoUrl = profilePhotoUrl;
+        this.email = email;
+        this.createdAt = createdAt;
+    }
 }

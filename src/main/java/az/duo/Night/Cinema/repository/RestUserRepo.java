@@ -19,10 +19,10 @@ public interface RestUserRepo extends JpaRepository<User, Long> {
     RoleName getRoleByEmail(@Param("email") String email);
 
     @Query(value = """
-       SELECT username AS realUsername,
-              phone_e164 AS phoneE164,
+       SELECT username,
+              phone_e164 AS phoneNumber,
               profile_photo_url AS profilePhotoUrl,
-              email AS email,
+              email,
               created_at AS createdAt
        FROM app_user
        WHERE id = :id
