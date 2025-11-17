@@ -18,15 +18,15 @@ public interface RestUserRepo extends JpaRepository<User, Long> {
     @Query("SELECT u.role FROM User u WHERE u.email = :email")
     RoleName getRoleByEmail(@Param("email") String email);
 
-    @Query("""
-       SELECT u.username AS realUsername,
-              u.phoneE164 AS phoneE164,
-              u.profilePhotoUrl AS profilePhotoUrl,
-              u.email AS email,
-              u.createdAt AS createdAt
-       FROM User u
-       WHERE u.id = :id
-       """)
+    @Query(value = """
+       SELECT username AS realUsername,
+              phoneE164 AS phoneE164,
+              profilePhotoUrl AS profilePhotoUrl,
+              email AS email,
+              createdAt AS createdAt
+       FROM app_user
+       WHERE id = :id
+       """, nativeQuery = true)
     Optional<DTOUserInfo> getUserInfoById(@Param("id") Long id);
 
 

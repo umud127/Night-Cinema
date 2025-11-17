@@ -21,7 +21,7 @@ public class RestUserControllerIMPL implements IRestUserController {
     @GetMapping(path = "/check")
     @Override
     public BaseEntity<RoleName> checkUserRole(@RequestHeader("Authorization") String token) {
-        return restUserService.checkUserRole(token);
+        return restUserService.checkUserRole(token.substring(7));
     }
 
     @GetMapping(path = "/info")
