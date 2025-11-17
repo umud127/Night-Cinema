@@ -39,7 +39,7 @@ public class RestUserServiceIMPL implements IRestUserService {
             throw new UnauthorizedUserException("token is invalid", "/user/check");
         }
 
-        if(!restUserRepo.existsByUsername(username)) {
+        if(!restUserRepo.existsByEmail(username)) {
             throw new NotFoundException("User Not Found with username: " + username, "/user/check");
         }
 
