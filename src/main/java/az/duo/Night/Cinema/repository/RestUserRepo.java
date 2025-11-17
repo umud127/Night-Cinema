@@ -14,7 +14,9 @@ import java.util.Optional;
 @Repository
 public interface RestUserRepo extends JpaRepository<User, Long> {
 
-    RoleName getRoleByUsername(String username);
+    @Query("SELECT u.role FROM User u WHERE u.email = :username")
+    RoleName getRoleByUsername(@Param("username") String username);
+
 
     Optional<User> findByEmail(String email);
 
