@@ -30,17 +30,17 @@ public class RestUserServiceIMPL implements IRestUserService {
     @Override
     public BaseEntity<RoleName> checkUserRole(String token) {
         if (token == null) {
-            throw new UnauthorizedUserException("token is invalid", "/user/me");
+            throw new UnauthorizedUserException("token is invalid", "/user/check");
         }
 
         String username = jwtService.extractUsername(token);
 
         if (username == null) {
-            throw new UnauthorizedUserException("token is invalid", "/user/me");
+            throw new UnauthorizedUserException("token is invalid", "/user/check");
         }
 
         if(!restUserRepo.existsByUsername(username)) {
-            throw new NotFoundException("User Not Found", "/user/me");
+            throw new NotFoundException("User Not Found", "/user/check");
         }
 
         RoleName role = restUserRepo.getRoleByUsername(username);
@@ -52,11 +52,11 @@ public class RestUserServiceIMPL implements IRestUserService {
         Long id = jwtService.extractIdFromToken(token);
 
         if(id == null) {
-            throw new UnauthorizedUserException("token is invalid", "/user/me");
+            throw new UnauthorizedUserException("token is invalid", "/user/info");
         }
 
         if(!restUserRepo.existsById(id)) {
-            throw new NotFoundException("User Not Found", "/user/me");
+            throw new NotFoundException("User Not Found", "/user/info");
         }
 
         Optional<User> dbUser = restUserRepo.findById(id);
