@@ -1,5 +1,6 @@
 package az.duo.Night.Cinema.repository;
 
+import az.duo.Night.Cinema.dto.user.DTOUserInfo;
 import az.duo.Night.Cinema.entity.MovieSession;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.RoleName;
@@ -14,8 +15,19 @@ import java.util.Optional;
 @Repository
 public interface RestUserRepo extends JpaRepository<User, Long> {
 
-    @Query("SELECT u.role FROM User u WHERE u.email = :username")
-    RoleName getRoleByUsername(@Param("username") String username);
+    @Query("SELECT u.role FROM User u WHERE u.email = :email")
+    RoleName getRoleByUsername(@Param("username") String email);
+
+    @Query("""
+       SELECT u.username AS realUsername,
+              u.phoneE164 AS phoneE164,
+              u.profilePhotoUrl AS profilePhotoUrl,
+              u.email AS email,
+              u.createdAt AS createdAt
+       FROM User u
+       WHERE u.id = :id
+       """)
+    Optional<DTOUserInfo> getUserInfoById(@Param("id") Long id);
 
 
     Optional<User> findByEmail(String email);

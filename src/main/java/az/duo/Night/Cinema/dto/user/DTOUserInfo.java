@@ -7,6 +7,7 @@ import java.util.Date;
 @Data
 public class DTOUserInfo {
 
+    private String email;
     private String username;
     private String phoneNumber;
     private Date createdAt;

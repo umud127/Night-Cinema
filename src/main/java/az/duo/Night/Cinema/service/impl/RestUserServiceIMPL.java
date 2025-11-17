@@ -59,16 +59,13 @@ public class RestUserServiceIMPL implements IRestUserService {
             throw new NotFoundException("User Not Found", "/user/info");
         }
 
-        Optional<User> dbUser = restUserRepo.findById(id);
+        Optional<DTOUserInfo> dbUser = restUserRepo.getUserInfoById(id);
 
-        DTOUserInfo user = new DTOUserInfo();
+        if (dbUser.isEmpty()) {
+            throw new NotFoundException("User Info Not Found", "/user/info");
+        }
 
-        user.setUsername(dbUser.get().getRealUsername());
-        user.setPhoneNumber(dbUser.get().getPhoneE164());
-        user.setCreatedAt(dbUser.get().getCreatedAt());
-        user.setProfilePhotoUrl(dbUser.get().getProfilePhotoUrl());
-
-        return BaseEntity.ok(user);
+        return BaseEntity.ok(dbUser.get());
     }
 
     public BaseEntity<DTOUserMovie> getUserMovie(String token) {
