@@ -20,10 +20,10 @@ public interface RestUserRepo extends JpaRepository<User, Long> {
 
     @Query(value = """
        SELECT username AS realUsername,
-              phoneE164 AS phoneE164,
-              profilePhotoUrl AS profilePhotoUrl,
+              phone_e164 AS phoneE164,
+              profile_photo_url AS profilePhotoUrl,
               email AS email,
-              createdAt AS createdAt
+              created_at AS createdAt
        FROM app_user
        WHERE id = :id
        """, nativeQuery = true)
