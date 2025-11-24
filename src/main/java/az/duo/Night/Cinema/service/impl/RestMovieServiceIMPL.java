@@ -4,6 +4,7 @@ import az.duo.Night.Cinema.dto.movie.DTOStarMovie;
 import az.duo.Night.Cinema.dto.movie.DTOMovieAll;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.enums.StatusCode;
+import az.duo.Night.Cinema.exception.NotFoundException;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
 import az.duo.Night.Cinema.service.IRestMovieService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +25,7 @@ public class RestMovieServiceIMPL implements IRestMovieService {
         if (starMovie != null) {
             return BaseEntity.ok(starMovie);
         } else {
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "No Star Movie Found", "/movie/star");
+            throw new NotFoundException("No Star Movie Found", "/movie/star");
         }
     }
 
@@ -36,7 +37,7 @@ public class RestMovieServiceIMPL implements IRestMovieService {
                 return BaseEntity.ok(dbMovies);
             }
 
-            return BaseEntity.notOk(StatusCode.NOT_FOUND, "No Movies Found", "/movie/all");
+            throw new NotFoundException("No Movies Found", "/movie/all");
     }
 
     @Override
@@ -48,8 +49,8 @@ public class RestMovieServiceIMPL implements IRestMovieService {
 
             if(dbMovies != null && !dbMovies.isEmpty()) {
                 return BaseEntity.ok(dbMovies);
-            } else {
-                return BaseEntity.notOk(StatusCode.NOT_FOUND, "No Movies Found", "/movie/by_name");
             }
+
+            throw new NotFoundException("No Movies Found", "/movie/by_name");
     }
 }

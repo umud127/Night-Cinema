@@ -2,10 +2,8 @@ package az.duo.Night.Cinema.handler;
 
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.enums.StatusCode;
-import az.duo.Night.Cinema.exception.BadRequestException;
-import az.duo.Night.Cinema.exception.DataInsertException;
-import az.duo.Night.Cinema.exception.NotFoundException;
-import az.duo.Night.Cinema.exception.UnauthorizedUserException;
+import az.duo.Night.Cinema.exception.*;
+import az.duo.Night.Cinema.exception.Exception;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -13,8 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public BaseEntity<String> handleException(Exception e) {
-        return BaseEntity.notOk(StatusCode.INTERNAL_SERVER_ERROR, e.getMessage(), "it can be everything");
+    public BaseEntity<String> handleException(Exception e, String path) {
+        return BaseEntity.notOk(StatusCode.INTERNAL_SERVER_ERROR, e.getMessage(), path);
     }
 
     @ExceptionHandler(BadRequestException.class)
@@ -34,6 +32,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(DataInsertException.class)
     public BaseEntity<String> handleDataInsertException(DataInsertException e) {
+        return BaseEntity.notOk(StatusCode.CONFLICT, e.getMessage(), e.getPath());
+    }
+
+    @ExceptionHandler(UnmatchedDataException.class)
+    public BaseEntity<String> handleUnmatchedDataException(UnmatchedDataException e) {
         return BaseEntity.notOk(StatusCode.CONFLICT, e.getMessage(), e.getPath());
     }
 }

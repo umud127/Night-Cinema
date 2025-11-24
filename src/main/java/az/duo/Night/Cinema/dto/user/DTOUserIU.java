@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 public class DTOUserIU {
+
     @Size(min = 3, max = 25, message = "Username must be between 3 and 25 characters")
     String username;
 
@@ -17,8 +18,5 @@ public class DTOUserIU {
 
     @Email(message = "Invalid email format (e.g., )")
     String email;
-
-    @Size(min = 8, message = "Password must be at least 8 characters long")
-    String password;
 
 }

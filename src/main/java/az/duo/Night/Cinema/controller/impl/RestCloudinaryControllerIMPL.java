@@ -3,6 +3,7 @@ package az.duo.Night.Cinema.controller.impl;
 import az.duo.Night.Cinema.controller.IRestCloudinaryController;
 import az.duo.Night.Cinema.service.IRestCloudinaryService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,6 +17,7 @@ public class RestCloudinaryControllerIMPL implements IRestCloudinaryController {
     private final IRestCloudinaryService restCloudinaryService;
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/uploadPhoto")
     public String uploadImage(@RequestHeader("Authorization") String token, @RequestParam("image") MultipartFile image) throws IOException {
         String imageUrl = restCloudinaryService.uploadImage(image);

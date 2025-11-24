@@ -1,15 +1,14 @@
 package az.duo.Night.Cinema.controller.impl;
 
 import az.duo.Night.Cinema.controller.IRestUserController;
-import az.duo.Night.Cinema.dto.user.DTOUserIU;
-import az.duo.Night.Cinema.dto.user.DTOUserInfo;
-import az.duo.Night.Cinema.dto.user.DTOUserMovie;
+import az.duo.Night.Cinema.dto.user.*;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.enums.RoleName;
 import az.duo.Night.Cinema.service.IRestUserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/api/user")
@@ -36,8 +35,18 @@ public class RestUserControllerIMPL implements IRestUserController {
         return restUserService.getUserMovie(token.substring(7));
     }
 
-    @PutMapping(path = "/update")
-    public BaseEntity<String> updateUser(@RequestHeader("Authorization") String token, @Valid @RequestBody DTOUserIU user) {
-        return restUserService.updateUser(token.substring(7), user);
+    @PutMapping(path = "/updateInfos")
+    public BaseEntity<String> updateUserInfos(@RequestHeader("Authorization") String token, @Valid @RequestBody DTOUserIU user) {
+        return restUserService.updateUserInfos(token.substring(7), user);
+    }
+
+    @PutMapping(path = "/updatePassword")
+    public BaseEntity<String> updateUserPassword(@RequestHeader("Authorization") String token, @Valid @RequestBody DTOUserPassword password) {
+        return restUserService.updateUserPassword(token.substring(7), password);
+    }
+
+    @PutMapping(path = "/updateProfilePhoto", consumes = "multipart/form-data")
+    public BaseEntity<String> updateUserProfilePhoto(@RequestHeader("Authorization") String token, @RequestPart("photo") MultipartFile photo) {
+        return restUserService.updateUserProfilePhoto(token.substring(7), photo);
     }
 }
