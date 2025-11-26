@@ -43,13 +43,13 @@ public class JWTService {
     public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", user.getRole().name());
-        claims.put("userId", user.getId());
+        claims.put("email", user.getEmail());
 
-        return buildToken(claims, user, ACCESS_TOKEN_EXPIRATION);
+        return buildToken(claims, user.getId().toString(), ACCESS_TOKEN_EXPIRATION);
     }
 
-    public String generateRefreshToken(UserDetails userDetails) {
-        return buildToken(new HashMap<>(), userDetails, REFRESH_TOKEN_EXPIRATION);
+    public String generateRefreshToken(User user) {
+        return buildToken(new HashMap<>(), user.getId().toString(), REFRESH_TOKEN_EXPIRATION);
     }
 
     public boolean isTokenExpired(String token) {
@@ -58,17 +58,17 @@ public class JWTService {
     }
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractAllClaims(token).get("email", String.class);
     }
 
     public Long extractIdFromToken(String token) {
-        return extractAllClaims(token).get("userId", Long.class);
+        return Long.valueOf(extractClaim(token, Claims::getSubject));
     }
 
-    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+    private String buildToken(Map<String, Object> extraClaims, String id, long expiration) {
         return Jwts.builder()
                 .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(id)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
