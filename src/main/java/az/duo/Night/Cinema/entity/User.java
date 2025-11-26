@@ -113,7 +113,7 @@ public class User implements UserDetails {
     //My custom methods
     @Override
     public String getUsername() {
-        return email;
+        return id.toString();
     }
 
     public String getRealUsername() {

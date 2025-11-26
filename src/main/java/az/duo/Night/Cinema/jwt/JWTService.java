@@ -57,10 +57,6 @@ public class JWTService {
         return expirationDate.before(new Date());
     }
 
-    public String extractUsername(String token) {
-        return extractAllClaims(token).get("email", String.class);
-    }
-
     public Long extractIdFromToken(String token) {
         return Long.valueOf(extractClaim(token, Claims::getSubject));
     }

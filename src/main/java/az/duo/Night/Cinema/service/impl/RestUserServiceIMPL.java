@@ -37,17 +37,17 @@ public class RestUserServiceIMPL implements IRestUserService {
             throw new UnauthorizedUserException("token is invalid", "/user/check");
         }
 
-        String email = jwtService.extractUsername(token);
+        Long id = jwtService.extractIdFromToken(token);
 
-        if (email == null) {
+        if (id == null) {
             throw new UnauthorizedUserException("token is invalid", "/user/check");
         }
 
-        if(!restUserRepo.existsByEmail(email)) {
-            throw new NotFoundException("User Not Found with username: " + email, "/user/check");
+        if(!restUserRepo.existsById(id)) {
+            throw new NotFoundException("User Not Found with username: " + id, "/user/check");
         }
 
-        RoleName role = restUserRepo.getRoleByEmail(email);
+        RoleName role = restUserRepo.getRoleById(id);
 
         return BaseEntity.ok(role);
     }

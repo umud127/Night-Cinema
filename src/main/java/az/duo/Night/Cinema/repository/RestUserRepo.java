@@ -15,8 +15,8 @@ import java.util.Optional;
 @Repository
 public interface RestUserRepo extends JpaRepository<User, Long> {
 
-    @Query("SELECT u.role FROM User u WHERE u.email = :email")
-    RoleName getRoleByEmail(@Param("email") String email);
+    @Query("SELECT u.role FROM User u WHERE u.id = :id")
+    RoleName getRoleById(@Param("id") Long id);
 
     @Query(value = """
        SELECT username,

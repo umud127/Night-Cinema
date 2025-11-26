@@ -1,5 +1,8 @@
 package az.duo.Night.Cinema.jwt;
 
+import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.exception.NotFoundException;
+import az.duo.Night.Cinema.repository.RestUserRepo;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -21,7 +24,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
     private final JWTService jwtService;
-    private final UserDetailsService userDetailsService;
+    private final RestUserRepo userRepo;
 
     private static final Logger logger = LoggerFactory.getLogger(JWTAuthenticationFilter.class);
 
@@ -29,7 +32,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String header;
         String token;
-        String username;
+        Long id;
 
         header = request.getHeader("Authorization");
         String requestPath = request.getServletPath();
@@ -56,18 +59,19 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         token = header.substring(7);
 
         try{
-            username = jwtService.extractUsername(token);
+            id = jwtService.extractIdFromToken(token);
 
-            if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
-                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            if(id != null && SecurityContextHolder.getContext().getAuthentication() == null){
+                User user = userRepo.findById(id)
+                        .orElseThrow(() -> new NotFoundException("User Not Found", request.getServletPath()));
 
-                if(userDetails != null && !jwtService.isTokenExpired(token)) {
+                if(user != null && !jwtService.isTokenExpired(token)) {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails,
+                            user,
                             null,
-                            userDetails.getAuthorities());
+                            user.getAuthorities());
 
-                    authentication.setDetails(userDetails);
+                    authentication.setDetails(user);
 
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }

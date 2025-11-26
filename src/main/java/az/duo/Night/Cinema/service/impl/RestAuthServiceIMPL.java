@@ -106,15 +106,15 @@ public class RestAuthServiceIMPL implements IRestAuthService {
 
         boolean tokenIsExpired = jwtService.isTokenExpired(refreshToken);
 
-        String username;
+        Long id;
 
         if (!tokenIsExpired) {
-            username = jwtService.extractUsername(refreshToken);
+            id = jwtService.extractIdFromToken(refreshToken);
         } else {
             throw new UnauthorizedUserException("refreshToken is expired", "/refresh");
         }
 
-        User user = restUserRepo.findByEmail(username).orElse(null);
+        User user = restUserRepo.findById(id).orElse(null);
 
         if(user != null) {
             AuthResponse response = new AuthResponse();
