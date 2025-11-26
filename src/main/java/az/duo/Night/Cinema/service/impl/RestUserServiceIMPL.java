@@ -127,7 +127,7 @@ public class RestUserServiceIMPL implements IRestUserService {
         if (user.getUsername() != null && !restUserRepo.existsByUsername(user.getUsername())) {
             dbUser.setUsername(user.getUsername());
         } else {
-            if (!Objects.equals(user.getUsername(), dbUser.getUsername())) {
+            if (!Objects.equals(user.getUsername(), dbUser.getRealUsername())) {
                 throw new DataInsertException("Username already taken", "/user/update");
             }
         }
