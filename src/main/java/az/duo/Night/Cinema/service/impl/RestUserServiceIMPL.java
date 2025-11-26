@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -118,13 +119,17 @@ public class RestUserServiceIMPL implements IRestUserService {
         if (user.getEmail() != null && !restUserRepo.existsByEmail(user.getEmail())) {
             dbUser.setEmail(user.getEmail());
         } else {
-            throw new DataInsertException("Email already taken", "/user/update");
+            if (!Objects.equals(user.getEmail(), dbUser.getEmail())) {
+                throw new DataInsertException("Email already taken", "/user/update");
+            }
         }
 
         if (user.getUsername() != null && !restUserRepo.existsByUsername(user.getUsername())) {
             dbUser.setUsername(user.getUsername());
         } else {
-            throw new DataInsertException("Username already taken", "/user/update");
+            if (!Objects.equals(user.getUsername(), dbUser.getUsername())) {
+                throw new DataInsertException("Username already taken", "/user/update");
+            }
         }
 
         restUserRepo.save(dbUser);
