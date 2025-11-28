@@ -76,7 +76,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
         if (request.getEmailOrUsername().contains("@")) {
             user = restUserRepo.findByEmail(request.getEmailOrUsername()).orElse(null);
         } else {
-            user = restUserRepo.findByUsername(request.getEmailOrUsername()).orElse(null);
+            user = restUserRepo.findUserByUsername(request.getEmailOrUsername()).orElse(null);
         }
 
         if (user != null) {

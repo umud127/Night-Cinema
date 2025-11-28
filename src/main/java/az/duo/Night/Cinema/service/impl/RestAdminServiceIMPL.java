@@ -160,7 +160,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     public BaseEntity<String> makeAdmin(String username) {
-        Optional<User> user = restUserRepo.findByUsername(username);
+        Optional<User> user = restUserRepo.findUserByUsername(username);
         User updatedUser = user.get();
 
         if (!user.isPresent()) {
@@ -205,20 +205,12 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     @Override
     @Transactional
     public BaseEntity<String> changePermission(ChangePermissionRequest request) {
-        Optional<User> user = restUserRepo.findByUsername(request.getUsername());
-        User updatedUser = user.get();
+        User user = restUserRepo.findAdminByUsername(request.getUsername())
+                .orElseThrow(() -> new NotFoundException("Admin not found", "/admin/changePermission") );
 
-        if (!user.isPresent()) {
-            throw new NotFoundException("User not found", "/admin/changePermission");
-        }
+        user.setAdminPermissions(request.getPermissions());
 
-        if (!updatedUser.getRole().equals("ADMIN")) {
-            updatedUser.setRole(RoleName.ADMIN);
-        }
-
-        updatedUser.setAdminPermissions(request.getPermissions());
-
-        restUserRepo.save(updatedUser);
+        restUserRepo.save(user);
 
         return BaseEntity.ok("Permission was changed successfully");
     }
