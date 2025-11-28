@@ -79,6 +79,10 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             user = restUserRepo.findUserByUsername(request.getEmailOrUsername()).orElse(null);
         }
 
+        if (user == null) {
+            user = restUserRepo.findAdminByUsername(request.getEmailOrUsername()).orElse(null);
+        }
+
         if (user != null) {
             if (bCryptPasswordEncoder.matches(request.getPassword(), user.getPassword())) {
                 AuthResponse response = new AuthResponse();
@@ -92,7 +96,7 @@ public class RestAuthServiceIMPL implements IRestAuthService {
             }
         }
 
-        throw new NotFoundException("email not found", "/login");
+        throw new NotFoundException("email or username not found", "/login");
     }
 
     @Override

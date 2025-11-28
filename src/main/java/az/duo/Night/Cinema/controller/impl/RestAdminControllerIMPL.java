@@ -99,6 +99,8 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     }
 
     @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/getPermissions")
     public BaseEntity<List<Permission>> getPermissions(String username) {
         return restAdminService.getPermissions(username);
     }
