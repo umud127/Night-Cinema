@@ -41,7 +41,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @PutMapping(path = "/updateMovie", consumes = "multipart/form-data")
     public BaseEntity<String> updateMovie(
             Long movieId,
-            @RequestBody AdminMovieDTO movie) {
+            @ModelAttribute AdminMovieDTO movie) {
         return restAdminService.updateMovie(movieId, movie);
     }
 
