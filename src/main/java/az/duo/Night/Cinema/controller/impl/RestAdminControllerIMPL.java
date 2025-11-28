@@ -24,7 +24,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/addMovie")
+    @PostMapping(path = "/addMovie", consumes = "multipart/form-data")
     public BaseEntity<String> addMovie(
             @RequestParam("coverPhotoUrl") MultipartFile coverPhoto,
             @RequestParam("backgroundImgUrl") MultipartFile background,
@@ -41,7 +41,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/updateMovie")
+    @PutMapping(path = "/updateMovie", consumes = "multipart/form-data")
     public BaseEntity<String> updateMovie(
             Long movieId,
             @RequestParam("coverPhotoUrl") MultipartFile coverPhoto,

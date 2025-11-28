@@ -36,16 +36,19 @@ public class RestUserControllerIMPL implements IRestUserController {
     }
 
     @PutMapping(path = "/updateInfos")
+    @Override
     public BaseEntity<String> updateUserInfos(@RequestHeader("Authorization") String token, @Valid @RequestBody DTOUserIU user) {
         return restUserService.updateUserInfos(token.substring(7), user);
     }
 
     @PutMapping(path = "/updatePassword")
+    @Override
     public BaseEntity<String> updateUserPassword(@RequestHeader("Authorization") String token, @Valid @RequestBody DTOUserPassword password) {
         return restUserService.updateUserPassword(token.substring(7), password);
     }
 
     @PutMapping(path = "/updateProfilePhoto", consumes = "multipart/form-data")
+    @Override
     public BaseEntity<String> updateUserProfilePhoto(@RequestHeader("Authorization") String token, @RequestPart("photo") MultipartFile photo) {
         return restUserService.updateUserProfilePhoto(token.substring(7), photo);
     }
