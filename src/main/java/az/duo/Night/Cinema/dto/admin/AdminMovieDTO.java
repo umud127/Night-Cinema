@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -19,8 +20,8 @@ public class AdminMovieDTO {
     String name;
     String description;
 
-    String coverPhotoUrl;
-    String backgroundImgUrl;
+    MultipartFile coverPhotoUrl;
+    MultipartFile backgroundImgUrl;
 
     String movieDuration;
     List<Genre> genre;

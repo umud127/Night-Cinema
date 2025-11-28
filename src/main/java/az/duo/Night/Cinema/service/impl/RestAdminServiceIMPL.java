@@ -14,10 +14,12 @@ import az.duo.Night.Cinema.jwt.JWTService;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
 import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestAdminService;
+import az.duo.Night.Cinema.service.IRestCloudinaryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +30,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     private final RestMovieRepo restMovieRepo;
     private final RestUserRepo restUserRepo;
     private final JWTService jWTService;
+    private final IRestCloudinaryService restCloudinaryService;
 
     @Override
     @Transactional
@@ -72,7 +75,27 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
         newMovie.setName(movie.getName());
         newMovie.setDescription(movie.getDescription());
-        newMovie.setCoverPhotoUrl(movie.getCoverPhotoUrl());
+
+
+        String coverPhotoUrl;
+        String backgroundImgUrl;
+        try {
+            coverPhotoUrl = restCloudinaryService.uploadImage(movie.getCoverPhotoUrl());
+            backgroundImgUrl = restCloudinaryService.uploadImage(movie.getBackgroundImgUrl());
+        } catch (IOException e) {
+            throw new BadRequestException("Movie cover photo upload failed", "/admin/addMovie");
+        }
+
+        newMovie.setCoverPhotoUrl(coverPhotoUrl);
+
+        if (movie.isStarMovie()) {
+            newMovie.setStarMovie(true);
+            newMovie.setBackgroundImgUrl(backgroundImgUrl);
+        } else {
+            newMovie.setStarMovie(false);
+            newMovie.setBackgroundImgUrl(null);
+        }
+
 
         newMovie.setMovieDuration(movie.getMovieDuration());
         newMovie.setGenres(movie.getGenre());
@@ -82,14 +105,6 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
         newMovie.setReleaseDate(movie.getReleaseDate());
         newMovie.setTrailerUrl(movie.getTrailerUrl());
-
-        if (movie.isStarMovie()) {
-            newMovie.setStarMovie(true);
-            newMovie.setBackgroundImgUrl(movie.getBackgroundImgUrl());
-        } else {
-            newMovie.setStarMovie(false);
-            newMovie.setBackgroundImgUrl(null);
-        }
 
         restMovieRepo.save(newMovie);
         return BaseEntity.ok("Movie was added successfully");
@@ -122,8 +137,17 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         updatedMovie.setName(movie.getName());
         updatedMovie.setDescription(movie.getDescription());
 
-        updatedMovie.setCoverPhotoUrl(movie.getCoverPhotoUrl());
-        updatedMovie.setBackgroundImgUrl(movie.getBackgroundImgUrl());
+        String coverPhotoUrl;
+        String backgroundImgUrl;
+        try {
+            coverPhotoUrl = restCloudinaryService.uploadImage(movie.getCoverPhotoUrl());
+            backgroundImgUrl = restCloudinaryService.uploadImage(movie.getBackgroundImgUrl());
+        } catch (IOException e) {
+            throw new BadRequestException("Movie cover photo upload failed", "/admin/updateMovie");
+        }
+
+        updatedMovie.setCoverPhotoUrl(coverPhotoUrl);
+        updatedMovie.setBackgroundImgUrl(backgroundImgUrl);
 
         updatedMovie.setMovieDuration(movie.getMovieDuration());
         updatedMovie.setGenres(movie.getGenre());
