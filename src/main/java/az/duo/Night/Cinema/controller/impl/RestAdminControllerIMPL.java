@@ -9,6 +9,7 @@ import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.service.IRestAdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,7 +25,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping(path = "/addMovie", consumes = "multipart/form-data")
+    @PostMapping(path = "/addMovie", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseEntity<String> addMovie(
             @RequestPart("cover") MultipartFile cover,
             @RequestPart("back") MultipartFile back,
@@ -41,7 +42,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping(path = "/updateMovie", consumes = "multipart/form-data")
+    @PutMapping(path = "/updateMovie", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseEntity<String> updateMovie(
             @RequestPart("id") Long id,
             @RequestPart("cover") MultipartFile cover,
