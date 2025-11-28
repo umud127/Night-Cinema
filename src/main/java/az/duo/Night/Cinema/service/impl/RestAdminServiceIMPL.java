@@ -6,6 +6,7 @@ import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.Movie;
 import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.enums.RoleName;
 import az.duo.Night.Cinema.exception.BadRequestException;
 import az.duo.Night.Cinema.exception.NotFoundException;
@@ -186,6 +187,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     }
 
     @Override
+    @Transactional
     public BaseEntity<String> makeAdminUser(String username) {
         User admin = restUserRepo.findAdminByUsername(username)
                 .orElseThrow(()-> new NotFoundException("Admin not found", "/admin/makeAdminUser"));
@@ -214,7 +216,11 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         return null;
     }
 
-    //get permision for check checking
+
+    @Override
+    public BaseEntity<List<Permission>> getPermissions(String username) {
+        return null;
+    }
 
     @Override
     @Transactional

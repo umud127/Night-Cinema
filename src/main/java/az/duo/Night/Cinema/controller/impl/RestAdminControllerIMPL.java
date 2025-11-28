@@ -6,6 +6,7 @@ import az.duo.Night.Cinema.dto.admin.AdminMovieSessionDTO;
 import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.service.IRestAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -95,6 +96,11 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @PutMapping("/updateSession")
     public BaseEntity<String> updateSession(AdminMovieSessionDTO session) {
         return restAdminService.updateSession( session);
+    }
+
+    @Override
+    public BaseEntity<List<Permission>> getPermissions(String username) {
+        return restAdminService.getPermissions(username);
     }
 
     @Override

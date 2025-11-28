@@ -5,6 +5,7 @@ import az.duo.Night.Cinema.dto.admin.AdminMovieSessionDTO;
 import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.enums.Permission;
 
 import java.util.List;
 
@@ -35,6 +36,8 @@ public interface IRestAdminService {
 
     BaseEntity<String> updateSession(AdminMovieSessionDTO session);
 
+
+    BaseEntity<List<Permission>> getPermissions(String username);
 
     BaseEntity<String> changePermission(ChangePermissionRequest request);
 }

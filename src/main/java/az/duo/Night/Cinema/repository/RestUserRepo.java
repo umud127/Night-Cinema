@@ -3,6 +3,7 @@ package az.duo.Night.Cinema.repository;
 import az.duo.Night.Cinema.dto.user.DTOUserInfo;
 import az.duo.Night.Cinema.entity.MovieSession;
 import az.duo.Night.Cinema.entity.User;
+import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.enums.RoleName;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -51,4 +52,7 @@ public interface RestUserRepo extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE u.role = az.duo.Night.Cinema.enums.RoleName.USER")
     List<User> findAllUsers();
+
+//    @Query("SELECT p FROM Permission p WHERE p.username = :username")
+//    List<Permission> findPermissionsByUsername(String username);
 }
