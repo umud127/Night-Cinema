@@ -137,6 +137,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         return BaseEntity.ok("Movie was updated successfully");
     }
 
+
     @Override
     public BaseEntity<String> deleteUser(Long id) {
         if (id == null) {
@@ -154,9 +155,10 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     public BaseEntity<List<User>> getUsers() {
-        List<User> users = restUserRepo.findAll();
+        List<User> users = restUserRepo.findAllUsers();
         return BaseEntity.ok(users);
     }
+
 
     @Override
     public BaseEntity<String> makeAdmin(String username) {
@@ -182,6 +184,18 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         List<User> admins = restUserRepo.findAllAdmins();
         return BaseEntity.ok(admins);
     }
+
+    @Override
+    public BaseEntity<String> makeAdminUser(String username) {
+        User admin = restUserRepo.findAdminByUsername(username)
+                .orElseThrow(()-> new NotFoundException("Admin not found", "/admin/makeAdminUser"));
+
+        admin.setRole(RoleName.USER);
+
+        restUserRepo.save(admin);
+        return BaseEntity.ok("Admin (" + username + ") was made user successfully");
+    }
+
 
     @Override
     @Transactional
