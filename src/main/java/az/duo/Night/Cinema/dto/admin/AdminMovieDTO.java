@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDate;
@@ -17,17 +18,20 @@ import java.util.List;
 @AllArgsConstructor
 public class AdminMovieDTO {
 
-    String name;
-    String description;
+    private String name;
+    private String description;
 
-    String movieDuration;
-    List<Genre> genre;
+    private String movieDuration;
+    private List<Genre> genre;
 
-    String director;
-    List<String> actors;
+    private String director;
+    private List<String> actors;
 
-    LocalDate releaseDate;
-    String trailerUrl;
+    private LocalDate releaseDate;
+    private String trailerUrl;
 
-    boolean starMovie;
+    private boolean starMovie;
+
+    private MultipartFile coverPhoto;
+    private MultipartFile background;
 }
