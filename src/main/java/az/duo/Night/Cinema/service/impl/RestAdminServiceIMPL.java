@@ -35,7 +35,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     @Transactional
-    public BaseEntity<String> addMovie(AdminMovieDTO movie) {
+    public BaseEntity<String> addMovie(MultipartFile cover, MultipartFile back, AdminMovieDTO movie) {
         if (movie.getName() == null) {
             throw new BadRequestException("Movie name is empty", "/admin/addMovie");
         }
@@ -43,10 +43,10 @@ public class RestAdminServiceIMPL implements IRestAdminService {
             throw new BadRequestException("Movie description is empty", "/admin/addMovie");
         }
 
-        if (movie.getCoverPhoto() == null) {
+        if (cover == null) {
             throw new BadRequestException("Movie cover photo url is empty", "/admin/addMovie");
         }
-        if (movie.getBackground() == null) {
+        if (back == null) {
             throw new BadRequestException("Movie background image url is empty", "/admin/addMovie");
         }
 
@@ -81,8 +81,8 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         String coverPhotoUrl;
         String backgroundImgUrl;
         try {
-            coverPhotoUrl = restCloudinaryService.uploadImage(movie.getCoverPhoto());
-            backgroundImgUrl = restCloudinaryService.uploadImage(movie.getBackground());
+            coverPhotoUrl = restCloudinaryService.uploadImage(cover);
+            backgroundImgUrl = restCloudinaryService.uploadImage(back);
         } catch (IOException e) {
             throw new BadRequestException("Movie cover photo upload failed", "/admin/addMovie");
         }
@@ -127,7 +127,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     @Transactional
-    public BaseEntity<String> updateMovie(Long movieId, AdminMovieDTO movie) {
+    public BaseEntity<String> updateMovie(Long movieId, MultipartFile cover, MultipartFile back, AdminMovieDTO movie) {
         if (!restMovieRepo.existsById(movieId)) {
             throw new NotFoundException("Movie not found", "/admin/updateMovie");
         }
@@ -141,18 +141,18 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         String coverPhotoUrl;
         String backgroundImgUrl;
 
-        if (movie.getCoverPhoto() != null) {
+        if (cover != null) {
             try {
-                coverPhotoUrl = restCloudinaryService.uploadImage(movie.getCoverPhoto());
+                coverPhotoUrl = restCloudinaryService.uploadImage(cover);
                 updatedMovie.setCoverPhotoUrl(coverPhotoUrl);
             } catch (IOException e) {
                 throw new BadRequestException("Cover photo upload failed", "/admin/updateMovie");
             }
         }
 
-        if (movie.getBackground() != null) {
+        if (back != null) {
             try {
-                backgroundImgUrl = restCloudinaryService.uploadImage(movie.getBackground());
+                backgroundImgUrl = restCloudinaryService.uploadImage(back);
                 updatedMovie.setBackgroundImgUrl(backgroundImgUrl);
             } catch (IOException e) {
                 throw new BadRequestException("Background photo upload failed", "/admin/updateMovie");

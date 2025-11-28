@@ -32,6 +32,6 @@ public class AdminMovieDTO {
 
     private boolean starMovie;
 
-    private MultipartFile coverPhoto;
-    private MultipartFile background;
+//    private MultipartFile coverPhoto;
+//    private MultipartFile background;
 }
