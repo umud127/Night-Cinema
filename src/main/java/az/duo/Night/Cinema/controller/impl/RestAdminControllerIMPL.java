@@ -26,9 +26,9 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "/addMovie", consumes = "multipart/form-data")
     public BaseEntity<String> addMovie(
-            @RequestParam("coverPhotoUrl") MultipartFile coverPhoto,
-            @RequestParam("backgroundImgUrl") MultipartFile background,
-            @RequestBody AdminMovieDTO movie) {
+            @RequestPart("coverPhotoUrl") MultipartFile coverPhoto,
+            @RequestPart("backgroundImgUrl") MultipartFile background,
+            @RequestPart("movie") AdminMovieDTO movie) {
         return restAdminService.addMovie(coverPhoto, background, movie);
     }
 
