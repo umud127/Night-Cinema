@@ -11,7 +11,6 @@ import az.duo.Night.Cinema.service.IRestAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -42,10 +41,8 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @PutMapping(path = "/updateMovie", consumes = "multipart/form-data")
     public BaseEntity<String> updateMovie(
             Long movieId,
-            @RequestParam("coverPhotoUrl") MultipartFile coverPhoto,
-            @RequestParam("backgroundImgUrl") MultipartFile background,
             @RequestBody AdminMovieDTO movie) {
-        return restAdminService.updateMovie(movieId, coverPhoto, background, movie);
+        return restAdminService.updateMovie(movieId, movie);
     }
 
     @Override
