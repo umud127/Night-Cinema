@@ -40,7 +40,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping(path = "/updateMovie", consumes = "multipart/form-data")
     public BaseEntity<String> updateMovie(
-            Long movieId,
+            @RequestParam("movieId") Long movieId,
             @ModelAttribute AdminMovieDTO movie) {
         return restAdminService.updateMovie(movieId, movie);
     }
