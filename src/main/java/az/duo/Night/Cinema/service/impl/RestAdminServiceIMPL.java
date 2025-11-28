@@ -10,6 +10,7 @@ import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.enums.RoleName;
 import az.duo.Night.Cinema.exception.BadRequestException;
 import az.duo.Night.Cinema.exception.NotFoundException;
+import az.duo.Night.Cinema.jwt.JWTService;
 import az.duo.Night.Cinema.repository.RestMovieRepo;
 import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestAdminService;
@@ -26,6 +27,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     private final RestMovieRepo restMovieRepo;
     private final RestUserRepo restUserRepo;
+    private final JWTService jWTService;
 
     @Override
     @Transactional
@@ -218,8 +220,16 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
 
     @Override
-    public BaseEntity<List<Permission>> getPermissions(String username) {
-        return null;
+    public BaseEntity<List<Permission>> getPermissions(String token) {
+        Long id = jWTService.extractIdFromToken(token);
+
+        if(id == null) {
+            throw new BadRequestException("Invalid token", "/admin/changePermission");
+        }
+
+        List<Permission> permissions = restUserRepo.findAdminPermissions(id);
+
+        return BaseEntity.ok(permissions);
     }
 
     @Override

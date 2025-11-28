@@ -37,7 +37,7 @@ public interface IRestAdminService {
     BaseEntity<String> updateSession(AdminMovieSessionDTO session);
 
 
-    BaseEntity<List<Permission>> getPermissions(String username);
+    BaseEntity<List<Permission>> getPermissions(String token);
 
     BaseEntity<String> changePermission(ChangePermissionRequest request);
 }
