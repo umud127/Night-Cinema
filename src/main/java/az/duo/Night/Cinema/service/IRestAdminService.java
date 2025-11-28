@@ -6,16 +6,17 @@ import az.duo.Night.Cinema.dto.admin.ChangePermissionRequest;
 import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.Permission;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface IRestAdminService {
 
-    BaseEntity<String> addMovie(AdminMovieDTO movie);
+    BaseEntity<String> addMovie(MultipartFile coverPhoto, MultipartFile background, AdminMovieDTO movie);
 
     BaseEntity<String> deleteMovie(Long id);
 
-    BaseEntity<String> updateMovie(Long movieId, AdminMovieDTO movie);
+    BaseEntity<String> updateMovie(Long movieId, MultipartFile coverPhoto, MultipartFile background, AdminMovieDTO movie);
 
 
     BaseEntity<String> deleteUser(Long id);

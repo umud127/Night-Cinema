@@ -20,9 +20,6 @@ public class AdminMovieDTO {
     String name;
     String description;
 
-    MultipartFile coverPhotoUrl;
-    MultipartFile backgroundImgUrl;
-
     String movieDuration;
     List<Genre> genre;
 
