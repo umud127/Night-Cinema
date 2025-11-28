@@ -108,7 +108,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/changePermission")
-    public BaseEntity<String> changePermission(ChangePermissionRequest request) {
+    public BaseEntity<String> changePermission(@RequestBody ChangePermissionRequest request) {
         return restAdminService.changePermission(request);
     }
 }
