@@ -29,7 +29,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     public BaseEntity<String> addMovie(
             @RequestPart("cover") MultipartFile cover,
             @RequestPart("back") MultipartFile back,
-            @RequestPart("movie") AdminMovieDTO movie) {
+            @ModelAttribute("movie") AdminMovieDTO movie) {
         return restAdminService.addMovie(cover, back, movie);
     }
 
@@ -47,7 +47,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
             @RequestPart("id") Long id,
             @RequestPart("cover") MultipartFile cover,
             @RequestPart("back") MultipartFile back,
-            @RequestPart("movie") AdminMovieDTO movie) {
+            @ModelAttribute("movie") AdminMovieDTO movie) {
         return restAdminService.updateMovie(id,cover, back, movie);
     }
 
