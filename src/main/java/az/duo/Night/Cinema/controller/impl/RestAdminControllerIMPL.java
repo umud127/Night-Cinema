@@ -8,6 +8,8 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.service.IRestAdminService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,9 +31,18 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     public BaseEntity<String> addMovie(
             @RequestPart(value = "cover") MultipartFile cover,
             @RequestPart(value = "back") MultipartFile back,
-            @ModelAttribute AdminMovieDTO movie) {
-        return restAdminService.addMovie(cover, back, movie);
+            @RequestPart String movie) throws JsonProcessingException {
+        AdminMovieDTO movieDTO = convertToDTO(movie);
+        return restAdminService.addMovie(cover, back, movieDTO);
     }
+
+
+    private AdminMovieDTO convertToDTO(String movieString) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(movieString, AdminMovieDTO.class);
+    }
+
+
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
@@ -47,8 +58,9 @@ public class RestAdminControllerIMPL implements IRestAdminController {
             @RequestPart("id") Long id,
             @RequestPart("cover") MultipartFile cover,
             @RequestPart("back") MultipartFile back,
-            @ModelAttribute("movie") AdminMovieDTO movie) {
-        return restAdminService.updateMovie(id,cover, back, movie);
+            @ModelAttribute("movie") String movie) throws JsonProcessingException {
+        AdminMovieDTO movieDTO = convertToDTO(movie);
+        return restAdminService.updateMovie(id,cover, back, movieDTO);
     }
 
     @Override
