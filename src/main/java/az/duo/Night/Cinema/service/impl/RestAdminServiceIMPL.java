@@ -78,7 +78,6 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         String backgroundImgUrl;
         try {
             coverPhotoUrl = restCloudinaryService.uploadImage(movie.getCoverPhoto());
-            backgroundImgUrl = restCloudinaryService.uploadImage(movie.getBackground());
         } catch (IOException e) {
             throw new BadRequestException("Movie cover photo upload failed", "/admin/addMovie");
         }
@@ -86,6 +85,11 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         newMovie.setCoverPhotoUrl(coverPhotoUrl);
 
         if (movie.isStarMovie()) {
+            try {
+                backgroundImgUrl = restCloudinaryService.uploadImage(movie.getBackground());
+            } catch (IOException e) {
+                throw new BadRequestException("Movie background photo upload failed", "/admin/addMovie");
+            }
             newMovie.setStarMovie(true);
             newMovie.setBackgroundImgUrl(backgroundImgUrl);
         } else {
