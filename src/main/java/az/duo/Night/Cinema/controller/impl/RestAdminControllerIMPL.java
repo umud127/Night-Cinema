@@ -100,15 +100,15 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/updateSession")
-    public BaseEntity<String> updateSession(AdminMovieSessionDTO session) {
+    public BaseEntity<String> updateSession(@RequestBody AdminMovieSessionDTO session) {
         return restAdminService.updateSession( session);
     }
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getPermissions")
-    public BaseEntity<List<Permission>> getPermissions(@RequestHeader("Authorization")String token) {
-        return restAdminService.getPermissions(token.substring(7));
+    public BaseEntity<List<Permission>> getPermissions(String username) {
+        return restAdminService.getPermissions(username.substring(7));
     }
 
     @Override
