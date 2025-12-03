@@ -1,6 +1,7 @@
 package az.duo.Night.Cinema.dto.admin;
 
 import az.duo.Night.Cinema.enums.Genre;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +33,10 @@ public class AdminMovieDTO {
 
     private boolean starMovie;
 
+    @Schema(required = false)
     private MultipartFile coverPhoto;
+
+    @Schema(required = false)
     private MultipartFile background;
 }
 
