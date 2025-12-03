@@ -16,7 +16,7 @@ public interface IRestAdminController {
 
     BaseEntity<String> deleteMovie(Long id);
 
-    BaseEntity<String> updateMovie(Long movieId, MultipartFile cover, MultipartFile back, AdminMovieDTO movie);
+    BaseEntity<String> updateMovie(Long id, AdminMovieDTO movie);
 
 
     BaseEntity<String> deleteUser(Long id);

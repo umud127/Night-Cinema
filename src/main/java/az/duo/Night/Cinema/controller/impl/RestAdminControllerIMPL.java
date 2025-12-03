@@ -8,13 +8,10 @@ import az.duo.Night.Cinema.entity.BaseEntity;
 import az.duo.Night.Cinema.entity.User;
 import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.service.IRestAdminService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,10 +44,8 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @PutMapping(path = "/updateMovie", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseEntity<String> updateMovie(
             @RequestPart("id") Long id,
-            @RequestPart("cover") MultipartFile cover,
-            @RequestPart("back") MultipartFile back,
             @RequestPart("movie") AdminMovieDTO movie) {
-        return restAdminService.updateMovie(id,cover, back, movie);
+        return restAdminService.updateMovie(id, movie);
     }
 
     @Override
