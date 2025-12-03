@@ -53,6 +53,6 @@ public interface RestUserRepo extends JpaRepository<User, Long> {
     @Query("SELECT u FROM User u WHERE u.role = az.duo.Night.Cinema.enums.RoleName.USER")
     List<User> findAllUsers();
 
-    @Query("SELECT u.adminPermissions FROM User u WHERE u.id = :id")
-    List<Permission> findAdminPermissions(Long id);
+    @Query("SELECT u.adminPermissions FROM User u WHERE u.id = :username")
+    List<Permission> findAdminPermissions(@Param("username") String username);
 }

@@ -255,14 +255,8 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
 
     @Override
-    public BaseEntity<List<Permission>> getPermissions(String token) {
-        Long id = jWTService.extractIdFromToken(token);
-
-        if(id == null) {
-            throw new BadRequestException("Invalid token", "/admin/changePermission");
-        }
-
-        List<Permission> permissions = restUserRepo.findAdminPermissions(id);
+    public BaseEntity<List<Permission>> getPermissions(String username) {
+        List<Permission> permissions = restUserRepo.findAdminPermissions(username);
 
         return BaseEntity.ok(permissions);
     }
