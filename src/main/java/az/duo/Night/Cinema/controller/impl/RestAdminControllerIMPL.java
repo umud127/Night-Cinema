@@ -72,7 +72,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/makeAdminUser")
-    public BaseEntity<String> makeAdminUser(String username) {
+    public BaseEntity<String> makeAdminUser(@RequestParam String username) {
         return restAdminService.makeAdminUser(username);
     }
 
@@ -86,7 +86,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteSession")
-    public BaseEntity<String> deleteSession(Long id) {
+    public BaseEntity<String> deleteSession(@RequestParam Long id) {
         return restAdminService.deleteSession(id);
     }
 
@@ -100,7 +100,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getPermissions")
-    public BaseEntity<List<Permission>> getPermissions(String username) {
+    public BaseEntity<List<Permission>> getPermissions(@RequestParam String username) {
         return restAdminService.getPermissions(username.substring(7));
     }
 
