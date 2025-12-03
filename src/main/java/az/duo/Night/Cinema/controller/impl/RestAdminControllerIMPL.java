@@ -29,17 +29,8 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping(path = "/addMovie", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public BaseEntity<String> addMovie(
-            @RequestPart(value = "cover") MultipartFile cover,
-            @RequestPart(value = "back") MultipartFile back,
-            @RequestPart String movie) throws JsonProcessingException {
-        AdminMovieDTO movieDTO = convertToDTO(movie);
-        return restAdminService.addMovie(cover, back, movieDTO);
-    }
-
-
-    private AdminMovieDTO convertToDTO(String movieString) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(movieString, AdminMovieDTO.class);
+            @ModelAttribute AdminMovieDTO movie) {
+        return restAdminService.addMovie(movie);
     }
 
 
@@ -58,9 +49,8 @@ public class RestAdminControllerIMPL implements IRestAdminController {
             @RequestPart("id") Long id,
             @RequestPart("cover") MultipartFile cover,
             @RequestPart("back") MultipartFile back,
-            @ModelAttribute("movie") String movie) throws JsonProcessingException {
-        AdminMovieDTO movieDTO = convertToDTO(movie);
-        return restAdminService.updateMovie(id,cover, back, movieDTO);
+            @RequestPart("movie") AdminMovieDTO movie) {
+        return restAdminService.updateMovie(id,cover, back, movie);
     }
 
     @Override

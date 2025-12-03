@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface IRestAdminService {
 
-    BaseEntity<String> addMovie(MultipartFile cover, MultipartFile back, AdminMovieDTO movie);
+    BaseEntity<String> addMovie(AdminMovieDTO movie);
 
     BaseEntity<String> deleteMovie(Long id);
 
