@@ -45,9 +45,6 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         if (movie.getCoverPhoto() == null) {
             throw new BadRequestException("Movie cover photo url is empty", "/admin/addMovie");
         }
-        if (movie.getBackground() == null) {
-            throw new BadRequestException("Movie background image url is empty", "/admin/addMovie");
-        }
 
         if (movie.getMovieDuration() == null) {
             throw new BadRequestException("Movie duration is empty", "/admin/addMovie");
