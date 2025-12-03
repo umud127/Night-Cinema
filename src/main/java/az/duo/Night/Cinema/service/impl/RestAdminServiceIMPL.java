@@ -201,7 +201,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
 
     @Override
     @Transactional
-    public BaseEntity<String> makeAdminUser(String username) {
+    public BaseEntity<String> degradeAdmin(String username) {
         User admin = restUserRepo.findAdminByUsername(username)
                 .orElseThrow(()-> new NotFoundException("Admin not found", "/admin/makeAdminUser"));
 
@@ -211,6 +211,17 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         return BaseEntity.ok("Admin (" + username + ") was made user successfully");
     }
 
+    @Override
+    @Transactional
+    public BaseEntity<String> upgradeUser(String username) {
+        User user = restUserRepo.findAdminByUsername(username)
+                .orElseThrow(()-> new NotFoundException("User not found", "/admin/makeAdminUser"));
+
+        user.setRole(RoleName.ADMIN);
+
+        restUserRepo.save(user);
+        return BaseEntity.ok("User (" + username + ") was made admin successfully");
+    }
 
     @Override
     @Transactional

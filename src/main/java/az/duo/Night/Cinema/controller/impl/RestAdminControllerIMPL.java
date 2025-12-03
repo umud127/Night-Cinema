@@ -71,9 +71,16 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/makeAdminUser")
-    public BaseEntity<String> makeAdminUser(@RequestParam String username) {
-        return restAdminService.makeAdminUser(username);
+    @PutMapping("/upgradeUser")
+    public BaseEntity<String> upgradeUser(@RequestParam String username) {
+        return restAdminService.upgradeUser(username);
+    }
+
+    @Override
+    @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/degradeAdmin")
+    public BaseEntity<String> degradeAdmin(@RequestParam String username) {
+        return restAdminService.degradeAdmin(username);
     }
 
     @Override

@@ -25,7 +25,9 @@ public interface IRestAdminController {
 
     BaseEntity<List<User>> getAdmins();
 
-    BaseEntity<String> makeAdminUser(String username);
+    BaseEntity<String> degradeAdmin(String username);
+
+    BaseEntity<String> upgradeUser(String username);
 
 
     BaseEntity<String> addSession(AdminMovieSessionDTO session);
