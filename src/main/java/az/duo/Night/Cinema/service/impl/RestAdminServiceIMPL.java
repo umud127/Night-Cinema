@@ -128,15 +128,11 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     @Override
     @Transactional
     public BaseEntity<String> updateMovie(Long movieId, AdminMovieDTO movie) {
-        if (!restMovieRepo.existsById(movieId)) {
-            throw new NotFoundException("Movie not found", "/admin/updateMovie");
-        }
+        Movie dbMovie = restMovieRepo.findById(movieId)
+                .orElseThrow(()->  new NotFoundException("Movie not found", "/admin/updateMovie"));
 
-        Optional<Movie> dbMovie = restMovieRepo.findById(movieId);
-        Movie updatedMovie = dbMovie.get();
-
-        updatedMovie.setName(movie.getName());
-        updatedMovie.setDescription(movie.getDescription());
+        dbMovie.setName(movie.getName());
+        dbMovie.setDescription(movie.getDescription());
 
         String coverPhotoUrl;
         String backgroundImgUrl;
@@ -144,7 +140,7 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         if (movie.getCoverPhoto() != null) {
             try {
                 coverPhotoUrl = restCloudinaryService.uploadImage(movie.getCoverPhoto());
-                updatedMovie.setCoverPhotoUrl(coverPhotoUrl);
+                dbMovie.setCoverPhotoUrl(coverPhotoUrl);
             } catch (IOException e) {
                 throw new BadRequestException("Cover photo upload failed", "/admin/updateMovie");
             }
@@ -153,25 +149,25 @@ public class RestAdminServiceIMPL implements IRestAdminService {
         if (movie.getBackground() != null) {
             try {
                 backgroundImgUrl = restCloudinaryService.uploadImage(movie.getBackground());
-                updatedMovie.setBackgroundImgUrl(backgroundImgUrl);
+                dbMovie.setBackgroundImgUrl(backgroundImgUrl);
             } catch (IOException e) {
                 throw new BadRequestException("Background photo upload failed", "/admin/updateMovie");
             }
         }
 
 
-        updatedMovie.setMovieDuration(movie.getMovieDuration());
-        updatedMovie.setGenres(movie.getGenre());
+        dbMovie.setMovieDuration(movie.getMovieDuration());
+        dbMovie.setGenres(movie.getGenre());
 
-        updatedMovie.setDirector(movie.getDirector());
-        updatedMovie.setActors(movie.getActors());
+        dbMovie.setDirector(movie.getDirector());
+        dbMovie.setActors(movie.getActors());
 
-        updatedMovie.setReleaseDate(movie.getReleaseDate());
-        updatedMovie.setTrailerUrl(movie.getTrailerUrl());
+        dbMovie.setReleaseDate(movie.getReleaseDate());
+        dbMovie.setTrailerUrl(movie.getTrailerUrl());
 
-        updatedMovie.setStarMovie(movie.isStarMovie());
+        dbMovie.setStarMovie(movie.isStarMovie());
 
-        restMovieRepo.save(updatedMovie);
+        restMovieRepo.save(dbMovie);
         return BaseEntity.ok("Movie was updated successfully");
     }
 
