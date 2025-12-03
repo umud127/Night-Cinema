@@ -18,7 +18,6 @@ import az.duo.Night.Cinema.service.IRestCloudinaryService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -195,26 +194,6 @@ public class RestAdminServiceIMPL implements IRestAdminService {
     public BaseEntity<List<User>> getUsers() {
         List<User> users = restUserRepo.findAllUsers();
         return BaseEntity.ok(users);
-    }
-
-
-    @Override
-    public BaseEntity<String> makeAdmin(String username) {
-        Optional<User> user = restUserRepo.findUserByUsername(username);
-        User updatedUser = user.get();
-
-        if (!user.isPresent()) {
-            throw new NotFoundException("User not found", "/admin/makeAdmin");
-        }
-
-        if (updatedUser.getRole().equals("ADMIN")) {
-            return BaseEntity.ok("User is already admin");
-        }
-
-        updatedUser.setRole(RoleName.ADMIN);
-        restUserRepo.save(updatedUser);
-
-        return BaseEntity.ok("User (" + username + ") was made admin successfully");
     }
 
     @Override

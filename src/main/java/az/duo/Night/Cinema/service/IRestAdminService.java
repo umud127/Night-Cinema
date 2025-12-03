@@ -23,8 +23,6 @@ public interface IRestAdminService {
 
     BaseEntity<List<User>> getUsers();
 
-    BaseEntity<String> makeAdmin(String username);
-
     BaseEntity<List<User>> getAdmins();
 
     BaseEntity<String> makeAdminUser(String username);

@@ -64,13 +64,6 @@ public class RestAdminControllerIMPL implements IRestAdminController {
 
     @Override
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/makeAdmin")
-    public BaseEntity<String> makeAdmin(String username) {
-        return restAdminService.makeAdmin(username);
-    }
-
-    @Override
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/getAdmins")
     public BaseEntity<List<User>> getAdmins() {
         return restAdminService.getAdmins();
@@ -86,7 +79,7 @@ public class RestAdminControllerIMPL implements IRestAdminController {
     @Override
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/addSession")
-    public BaseEntity<String> addSession(AdminMovieSessionDTO session) {
+    public BaseEntity<String> addSession(@RequestBody AdminMovieSessionDTO session) {
         return restAdminService.addSession(session);
     }
 
