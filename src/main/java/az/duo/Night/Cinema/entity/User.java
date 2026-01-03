@@ -2,6 +2,7 @@ package az.duo.Night.Cinema.entity;
 
 import az.duo.Night.Cinema.enums.Permission;
 import az.duo.Night.Cinema.enums.RoleName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -78,6 +79,7 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "movie_session_id")
     )
+    @JsonIgnore
     private List<MovieSession> movies;
 
     @Column(name = "created_at")

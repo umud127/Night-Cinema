@@ -18,4 +18,6 @@ public interface IRestUserController {
     BaseEntity<String> updateUserPassword(String token, DTOUserPassword password);
 
     BaseEntity<String> updateUserProfilePhoto(String token, MultipartFile photo);
+
+    BaseEntity<String> buyTicket(String token, Long sessionId);
 }

@@ -9,9 +9,11 @@ import az.duo.Night.Cinema.enums.RoleName;
 import az.duo.Night.Cinema.exception.*;
 import az.duo.Night.Cinema.exception.Exception;
 import az.duo.Night.Cinema.jwt.JWTService;
+import az.duo.Night.Cinema.repository.RestSessionRepo;
 import az.duo.Night.Cinema.repository.RestUserRepo;
 import az.duo.Night.Cinema.service.IRestCloudinaryService;
 import az.duo.Night.Cinema.service.IRestUserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,6 +33,7 @@ public class RestUserServiceIMPL implements IRestUserService {
     private final JWTService jwtService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final IRestCloudinaryService restCloudinaryService;
+    private final RestSessionRepo restSessionRepo;
 
     @Override
     public BaseEntity<RoleName> checkUserRole(String token) {
@@ -184,5 +188,39 @@ public class RestUserServiceIMPL implements IRestUserService {
         }
 
         throw new BadRequestException("Photo is empty", "/user/photo");
+    }
+
+    @Transactional
+    @Override
+    public BaseEntity<String> buyTicket(String token, Long sessionId) {
+        Long id = jwtService.extractIdFromToken(token);
+        if(id == null) {
+            throw new UnauthorizedUserException("token is invalid", "/user/buyTicket");
+        }
+
+        Optional<User> user = restUserRepo.findById(id);
+        User dbUser;
+        if(user.isPresent()) {
+            dbUser = user.get();
+        } else {
+            throw new NotFoundException("User Not Found", "/user/buyTicket");
+        }
+
+        Optional<MovieSession> dtoMovieSession = restSessionRepo.findById(sessionId);
+        MovieSession movieSession;
+
+        if(dtoMovieSession.isPresent()) {
+            movieSession= dtoMovieSession.get();
+        } else {
+            throw new NotFoundException("User Not Found", "/user/buyTicket");
+        }
+
+        dbUser.getMovies().add(movieSession);
+        dbUser.setGotTickets(dbUser.getGotTickets() + 1);
+
+        restUserRepo.save(dbUser);
+
+
+        return BaseEntity.ok("User Bought Ticket Successfully");
     }
 }

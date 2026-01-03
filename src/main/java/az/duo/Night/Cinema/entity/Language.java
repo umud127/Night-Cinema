@@ -1,5 +1,6 @@
 package az.duo.Night.Cinema.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +23,6 @@ public class Language {
     private String name;
 
     @OneToMany(mappedBy = "language")
+    @JsonIgnore
     private List<MovieSession> movieSessions = new ArrayList<>();
 }

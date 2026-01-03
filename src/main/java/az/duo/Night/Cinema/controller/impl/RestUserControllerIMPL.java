@@ -52,4 +52,10 @@ public class RestUserControllerIMPL implements IRestUserController {
     public BaseEntity<String> updateUserProfilePhoto(@RequestHeader("Authorization") String token, @RequestPart("photo") MultipartFile photo) {
         return restUserService.updateUserProfilePhoto(token.substring(7), photo);
     }
+
+    @PutMapping(path = "/buyTicket")
+    @Override
+    public BaseEntity<String> buyTicket(@RequestHeader("Authorization") String token, Long sessionId) {
+        return restUserService.buyTicket(token, sessionId);
+    }
 }

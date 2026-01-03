@@ -29,6 +29,7 @@ public class SecurityConfig {
     private static final String ADMIN = "/api/admin/**";
     private static final String MOVIE = "/api/movie/**";
     private static final String MOVIE_SEARCH = "/api/movie/by_name/**";
+    private static final String MOVIE_SESSION = "/api/session/**";
 
     private static final String SWAGGER = "/swagger-ui/**";
     private static final String V3 = "/v3/api-docs/**";
@@ -60,6 +61,7 @@ public class SecurityConfig {
                                         .requestMatchers(SWAGGER_UI_INDEX).permitAll()
                                         .requestMatchers(WEBJARS).permitAll()
                                         .requestMatchers(SWAGGER_RESOURCES).permitAll()
+                                        .requestMatchers(MOVIE_SESSION).permitAll()
 
                                         .requestMatchers(AUTH).permitAll()
                                         .requestMatchers(MOVIE).permitAll()

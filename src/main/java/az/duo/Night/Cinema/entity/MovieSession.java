@@ -1,6 +1,7 @@
 package az.duo.Night.Cinema.entity;
 
 import az.duo.Night.Cinema.enums.Location;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +36,7 @@ public class MovieSession {
     private Room room;
 
     @ManyToMany
+    @JsonIgnore
     private List<User> users;
 
     @Column(name = "start_time")

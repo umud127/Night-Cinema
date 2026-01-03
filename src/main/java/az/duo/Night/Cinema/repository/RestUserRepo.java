@@ -55,4 +55,6 @@ public interface RestUserRepo extends JpaRepository<User, Long> {
 
     @Query("SELECT u.adminPermissions FROM User u WHERE u.username = :username")
     List<Permission> findAdminPermissions(@Param("username") String username);
+
+    Long id(Long id);
 }
